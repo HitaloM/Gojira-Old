@@ -5,12 +5,13 @@
 import datetime
 import logging
 
+import sentry_sdk
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from pyrogram.types import User
 
 import gojira
-from gojira.config import API_HASH, API_ID, BOT_TOKEN, SUDO_USERS
+from gojira.config import API_HASH, API_ID, BOT_TOKEN, SENTRY_KEY, SUDO_USERS
 from gojira.utils import modules
 from gojira.utils.langs import get_languages, load_languages
 
@@ -46,6 +47,12 @@ class Gojira(Client):
         load_languages()
         languages = len(get_languages(only_codes=True))
         logger.info("%s languages was loaded.", languages)
+
+        if not SENTRY_KEY or SENTRY_KEY == "":
+            logger.warning("No sentry.io key found! Service not initialized.")
+        else:
+            logger.info("Starting sentry.io service.")
+            sentry_sdk.init(SENTRY_KEY, traces_sample_rate=1.0)
 
         self.me = await self.get_me()
         logger.info(

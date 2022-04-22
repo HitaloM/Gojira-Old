@@ -6,6 +6,8 @@ BOT_TOKEN: str = ""
 
 DATABASE_PATH: str = "./gojira/database/db.sqlite"
 
+SENTRY_KEY: str = ""
+
 SUDO_USERS: List[int] = [
     1155717290,
     918317361,
