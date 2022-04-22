@@ -49,7 +49,7 @@ async def character_view(bot: Gojira, union: Union[CallbackQuery, Message]):
                 await asyncio.sleep(0.5)
                 results = await client.search(query, "character", page=1, limit=10)
 
-            if results is None:
+            if results is None or len(results) == 0:
                 return
 
             if len(results) == 1:
