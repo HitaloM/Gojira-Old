@@ -13,8 +13,8 @@ meval = "2.5"
 PyYAML = "5.4.1"
 psutil = "5.8.0"
 TgCrypto = "1.2.3"
-python-anilist = "1.0.9"
 uvloop = {version = "^0.16", optional = true}
+python-anilist = {git = "https://github.com/AmanoTeam/python-anilist", branch = "main"}
 pyrogram = {git = "https://github.com/AmanoTeam/Pyrogram"}
 
 [tool.poetry.dev-dependencies]

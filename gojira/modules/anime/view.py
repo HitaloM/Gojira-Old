@@ -146,7 +146,7 @@ async def anime_view_more(bot: Gojira, callback: CallbackQuery):
         buttons = [
             (lang.description_button, f"anime description {anime_id} {user_id} 1"),
             (lang.characters_button, f"anime characters {anime_id} {user_id}"),
-            (lang.studios_button, f"anime studios {anime_id} {user_id}"),
+            (lang.staff_button, f"anime staff {anime_id} {user_id} 1"),
         ]
 
         if hasattr(anime, "trailer"):
@@ -169,7 +169,6 @@ async def anime_view_more(bot: Gojira, callback: CallbackQuery):
 @use_chat_language()
 async def anime_view_description(bot: Gojira, callback: CallbackQuery):
     message = callback.message
-    chat = message.chat
     user = callback.from_user
     lang = callback._lang
 
@@ -218,7 +217,6 @@ async def anime_view_description(bot: Gojira, callback: CallbackQuery):
 @use_chat_language()
 async def anime_view_characters(bot: Gojira, callback: CallbackQuery):
     message = callback.message
-    chat = message.chat
     user = callback.from_user
     lang = callback._lang
 
@@ -249,18 +247,50 @@ async def anime_view_characters(bot: Gojira, callback: CallbackQuery):
         )
 
 
-@Gojira.on_callback_query(filters.regex(r"^anime studios (\d+) (\d+)"))
+@Gojira.on_callback_query(filters.regex(r"^anime staff (\d+) (\d+) (\d+)"))
 @use_chat_language()
-async def anime_view_studios(bot: Gojira, callback: CallbackQuery):
+async def anime_view_staff(bot: Gojira, callback: CallbackQuery):
     message = callback.message
-    chat = message.chat
     user = callback.from_user
     lang = callback._lang
 
     anime_id = int(callback.matches[0].group(1))
     user_id = int(callback.matches[0].group(2))
+    page = int(callback.matches[0].group(3))
 
     if user_id != user.id:
         return
 
-    await callback.answer(lang.unfinished_function_alert, show_alert=True)
+    async with anilist.AsyncClient() as client:
+        anime = await client.get(anime_id, "anime")
+
+        staff_text = lang.staff_text
+
+        staffs = sorted(anime.staff, key=lambda staff: staff.id)
+        for person in staffs:
+            staff_text += f"\n• <code>{person.id}</code> - {person.name.full} (<i>{person.role}</i>)"
+
+        amount = 1024
+        page = 1 if page <= 0 else page
+        offset = (page - 1) * amount
+        stop = offset + amount
+        pages = math.ceil(len(staff_text) / amount)
+        staff_text = staff_text[offset - (3 if page > 1 else 0) : stop]
+
+        page_buttons = []
+        if page > 1:
+            page_buttons.append(("⬅️", f"anime staff {anime_id} {user_id} {page - 1}"))
+        if not page == pages:
+            staff_text = staff_text[: len(staff_text) - 3] + "..."
+            page_buttons.append(("➡️", f"anime staff {anime_id} {user_id} {page + 1}"))
+
+        keyboard = []
+        if len(page_buttons) > 0:
+            keyboard.append(page_buttons)
+
+        keyboard.append([(lang.back_button, f"anime more {anime_id} {user_id}")])
+
+        await message.edit_text(
+            staff_text,
+            reply_markup=ikb(keyboard),
+        )

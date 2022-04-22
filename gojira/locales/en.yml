@@ -305,11 +305,17 @@ description_button:
 characters_text: |
     Below are some characters from the item in question.
 
+staff_text: |
+    Below are some persons from the item in question.
+
 characters_button:
     🧑‍🤝‍🧑 Characters
 
 studios_button:
     🌆 Studios
+
+staff_button:
+    👨‍💻 Staff
 
 trailer_button:
     🎦 Trailer
