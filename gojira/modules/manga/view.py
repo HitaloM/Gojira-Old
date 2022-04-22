@@ -77,16 +77,7 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         if manga is None:
             return
 
-        photo: str = ""
-        if hasattr(manga, "banner"):
-            photo = manga.banner
-        elif hasattr(manga, "cover"):
-            if hasattr(manga.cover, "extra_large"):
-                photo = manga.cover.extra_large
-            elif hasattr(manga.cover, "large"):
-                photo = manga.cover.large
-            elif hasattr(manga.cover, "medium"):
-                photo = manga.cover.medium
+        photo = f"https://img.anili.st/media/{manga_id}"
 
         text = f"<b>{manga.title.romaji}</b>"
         if hasattr(manga.title, "native"):
