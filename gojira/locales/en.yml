@@ -220,7 +220,7 @@ help_button:
 
 about_text: |
     <b>{bot_name}</b> is a bot developed in <i>Python</i> with the <b>MTProto Pyrogram</b> library, made to be fast, stable and complete when it comes to animes.
-    Links: {github} | {channel} | {group}
+    Links: {github} | {group}
 
 about_button:
     👥 About

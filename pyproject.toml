@@ -7,14 +7,12 @@ license = "GPLv3"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-beautifulsoup4 = "4.9.3"
 httpx = {version = "0.22.0", extras = ["http2"]}
 humanize = "3.11.0"
 meval = "2.5"
 PyYAML = "5.4.1"
 psutil = "5.8.0"
 TgCrypto = "1.2.3"
-telegraph = "1.4.1"
 python-anilist = "1.0.9"
 uvloop = {version = "^0.16", optional = true}
 pyrogram = {git = "https://github.com/AmanoTeam/Pyrogram"}

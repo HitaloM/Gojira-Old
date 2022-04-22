@@ -34,8 +34,7 @@ async def about(bot: Gojira, union: Union[CallbackQuery, Message]):
     await (message.edit_text if is_callback else message.reply_text)(
         lang.about_text.format(
             bot_name=bot.me.first_name,
-            github="<a href='https://github.com/AmanoTeam/PyGodzilla'>GitHub</a>",
-            channel=f"<a href='https://t.me/ShitpostTherapy'>{lang.channel}</a>",
+            github="<a href='https://github.com/HitaloSama/Gojira'>GitHub</a>",
             group=f"<a href='https://t.me/SpamTherapy'>{lang.group}</a>",
         ),
         disable_web_page_preview=True,
