@@ -17,7 +17,7 @@ try:
     uvloop.install()
 except ImportError:
     if not is_windows():
-        log.warning("uvloop is not installed and therefore will be disabled.")
+        logger.warning("uvloop is not installed and therefore will be disabled.")
 
 # Disable ugly pyrogram notice print
 Session.notice_displayed = True
