@@ -5,14 +5,15 @@
 import datetime
 import logging
 
+import aiocron
 import sentry_sdk
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from pyrogram.types import User
 
 import gojira
-from gojira.config import API_HASH, API_ID, BOT_TOKEN, SENTRY_KEY, SUDO_USERS
-from gojira.utils import modules
+from gojira.config import API_HASH, API_ID, BOT_TOKEN, CHATS, SENTRY_KEY, SUDO_USERS
+from gojira.utils import backup, modules
 from gojira.utils.langs import get_languages, load_languages
 
 logger = logging.getLogger(__name__)
@@ -63,6 +64,11 @@ class Gojira(Client):
         )
 
         modules.load(self)
+
+        if CHATS["backup"]:
+            aiocron.crontab("0 * * * *", func=backup.save, args=(self), start=True)
+        else:
+            logger.info("Backups disabled.")
 
     async def stop(self):
         await super().stop()

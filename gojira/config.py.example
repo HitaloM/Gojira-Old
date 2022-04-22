@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 
 API_ID: int = 0
 API_HASH: str = ""
@@ -7,6 +7,11 @@ BOT_TOKEN: str = ""
 DATABASE_PATH: str = "./gojira/database/db.sqlite"
 
 SENTRY_KEY: str = ""
+
+CHATS: Dict[str, int] = {
+    "backup": 0,
+    "log": 0,
+}
 
 SUDO_USERS: List[int] = [
     1155717290,
