@@ -33,14 +33,24 @@ def use_chat_language() -> Callable:
 
                 if user_id not in user_languages:
                     user = await get_user_by_id(user_id)
-                    user_languages[user_id] = "en" if user is None else user["language"]
+                    if user is None:
+                        user_languages[user_id] = "en"
+                    else:
+                        user_languages[user_id] = user["language"]
+                        if user["language"] not in languages:
+                            user_languages[user_id] = "en"
                 union._lang = languages[user_languages[user_id]]
             else:
                 chat_id = chat.id
 
                 if chat_id not in chat_languages:
                     chat = await get_chat_by_id(chat_id)
-                    chat_languages[chat_id] = "en" if chat is None else chat["language"]
+                    if chat is None:
+                        chat_languages[chat_id] = "en"
+                    else:
+                        chat_languages[chat_id] = chat["language"]
+                        if chat["language"] not in languages:
+                            chat_languages[chat_id] = "en"
                 union._lang = languages[chat_languages[chat_id]]
 
             return await function(client, union)

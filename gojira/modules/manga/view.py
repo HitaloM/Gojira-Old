@@ -12,6 +12,7 @@ from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery, Message
 
 from gojira.bot import Gojira
+from gojira.modules.favorites import get_favorite_button
 from gojira.utils.langs.decorators import use_chat_language
 
 
@@ -108,6 +109,9 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         buttons = [
             (lang.view_more_button, f"manga more {manga.id} {user.id}"),
         ]
+
+        if is_private:
+            buttons.append(await get_favorite_button(lang, user, "manga", manga.id))
 
         keyboard = array_chunk(buttons, 2)
 

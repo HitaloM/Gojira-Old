@@ -35,6 +35,13 @@ class Database(object):
                 language VARCHAR(2) NOT NULL DEFAULT \"en\",
                 registration_time INTEGER NOT NULL
         );
+
+        CREATE TABLE IF NOT EXISTS favorites (
+                id INTEGER PRIMARY KEY,
+                user INTEGER NOT NULL,
+                item INTEGER,
+                type VARCHAR(7)
+        );
         """
         )
 
