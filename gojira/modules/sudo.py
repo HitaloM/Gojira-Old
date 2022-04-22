@@ -8,6 +8,7 @@ import io
 import os
 import sys
 import traceback
+from signal import SIGINT
 from typing import Dict
 
 import meval
@@ -88,7 +89,7 @@ async def upgrade_callback(bot: Gojira, callback: CallbackQuery):
 
     if proc.returncode == 0:
         await sent.edit_text("Restarting...")
-        args = [sys.executable, "-m", "amime"]
+        args = [sys.executable, "-m", "gojira"]
         os.execv(sys.executable, args)
     else:
         error = ""
@@ -103,14 +104,14 @@ async def upgrade_callback(bot: Gojira, callback: CallbackQuery):
 @Gojira.on_message(filters.cmd(r"re(boot|start)") & filters.sudo)
 async def reboot_message(bot: Gojira, message: Message):
     await message.reply_text("Restarting...")
-    args = [sys.executable, "-m", "amime"]
+    args = [sys.executable, "-m", "gojira"]
     os.execv(sys.executable, args)
 
 
 @Gojira.on_message(filters.cmd(r"shutdown") & filters.sudo)
 async def shutdown_message(bot: Gojira, message: Message):
     await message.reply_text("Turning off...")
-    sys.exit(0)
+    os.kill(os.getpid(), SIGINT)
 
 
 @Gojira.on_message(filters.cmd("(sh(eel)?|term(inal)?) ") & filters.sudo)
@@ -224,3 +225,11 @@ async def reload_message(bot: Gojira, message: Message):
     await sent.edit_text(
         f"Modules reloaded in <code>{(second - first).microseconds / 1000}ms</code>."
     )
+
+
+@Gojira.on_message(filters.cmd(r"ping$") & filters.sudo)
+async def ping_message(bot: Gojira, message: Message):
+    start = datetime.datetime.now().replace(tzinfo=datetime.timezone.utc)
+    sent = await message.reply_text("Pong!")
+    end = datetime.datetime.now().replace(tzinfo=datetime.timezone.utc)
+    await sent.edit_text(f"<code>{(end - start).microseconds / 1000}ms</code>")
