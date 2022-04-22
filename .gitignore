@@ -4,6 +4,7 @@
 *.sqlite*
 config.py
 venv/
+lib/
 
 # Byte-compiled
 __pycache__/

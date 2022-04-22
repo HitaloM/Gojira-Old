@@ -1,0 +1,14 @@
+from typing import List
+
+API_ID: int = 0
+API_HASH: str = ""
+BOT_TOKEN: str = ""
+
+DATABASE_PATH: str = "./gojira/database/db.sqlite"
+
+SUDO_USERS: List[int] = [
+    1155717290,
+    918317361,
+    705707638,
+]  # @AndrielFR, @Hitalo and @VegaZS
+PREFIXES: List[str] = ["!", "/"]  # Like !start or /start

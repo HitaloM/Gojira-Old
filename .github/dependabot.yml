@@ -7,15 +7,3 @@ updates:
       interval: "weekly"
       timezone: "America/Sao_Paulo"
     open-pull-requests-limit: 10
-    commit-message:
-      prefix: "pip prod"
-      prefix-development: "pip dev"
-      include: "scope"
-    ignore:
-      - dependency-name: "pyrogram"
-      - dependency-name: "httpx"
-    labels:
-      - "pip"
-      - "dependencies"
-    pull-request-branch-name:
-      separator: "/"
