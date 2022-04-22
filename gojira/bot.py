@@ -8,6 +8,7 @@ import logging
 import aiocron
 import sentry_sdk
 from pyrogram import Client, __version__
+from pyrogram.errors import BadRequest
 from pyrogram.raw.all import layer
 from pyrogram.types import User
 
@@ -69,6 +70,18 @@ class Gojira(Client):
             aiocron.crontab("0 * * * *", func=backup.save, args=(self), start=True)
         else:
             logger.info("Backups disabled.")
+
+        try:
+            for sudo in self.sudos:
+                await self.send_message(
+                    chat_id=sudo,
+                    text=(
+                        f"<b>Gojira</b> <code>v{gojira.__version__}</code> started!"
+                        f"\n<b>Pyrogram</b> <code>v{__version__}</code> (Layer {layer})"
+                    ),
+                )
+        except BadRequest:
+            logger.error("Error while sending the startup message.", exc_info=True)
 
     async def stop(self):
         await super().stop()
