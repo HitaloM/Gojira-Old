@@ -92,9 +92,11 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         if hasattr(manga.title, "native"):
             text += f" (<code>{manga.title.native}</code>)"
         text += f"\n\n<b>ID</b>: <code>{manga.id}</code>"
-        if hasattr(manga, "score"):
-            if hasattr(manga.score, "average"):
-                text += f"\n<b>{lang.score}</b>: <code>{manga.score.average}</code>"
+        if (
+            hasattr(manga, "score")
+            and hasattr(manga.score, "average")
+        ):
+            text += f"\n<b>{lang.score}</b>: <code>{manga.score.average}</code>"
         text += f"\n<b>{lang.status}</b>: <code>{manga.status}</code>"
         if hasattr(manga, "genres"):
             text += f"\n<b>{lang.genres}</b>: <code>{', '.join(manga.genres)}</code>"

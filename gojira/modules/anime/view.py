@@ -80,9 +80,11 @@ async def anime_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         if hasattr(anime.title, "native"):
             text += f" (<code>{anime.title.native}</code>)"
         text += f"\n\n<b>ID</b>: <code>{anime.id}</code>"
-        if hasattr(anime, "score"):
-            if hasattr(anime.score, "average"):
-                text += f"\n<b>{lang.score}</b>: <code>{anime.score.average}</code>"
+        if (
+            hasattr(anime, "score")
+            and hasattr(anime.score, "average")
+        ):
+            text += f"\n<b>{lang.score}</b>: <code>{anime.score.average}</code>"
         text += f"\n<b>{lang.status}</b>: <code>{anime.status}</code>"
         if hasattr(anime, "genres"):
             text += f"\n<b>{lang.genres}</b>: <code>{', '.join(anime.genres)}</code>"
@@ -149,9 +151,11 @@ async def anime_view_more(bot: Gojira, callback: CallbackQuery):
             (lang.staff_button, f"anime staff {anime_id} {user_id} 1"),
         ]
 
-        if hasattr(anime, "trailer"):
-            if hasattr(anime.trailer, "url"):
-                buttons.append((lang.trailer_button, anime.trailer.url, "url"))
+        if (
+            hasattr(anime, "trailer")
+            and hasattr(anime.trailer, "url")
+        ):
+            buttons.append((lang.trailer_button, anime.trailer.url, "url"))
 
         buttons.append(("🐢 Anilist", anime.url, "url"))
 

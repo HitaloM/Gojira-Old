@@ -17,20 +17,23 @@ from gojira.modules.manga.view import manga_view
 async def view(bot: Gojira, message: Message):
     from_bot = message.via_bot
 
-    if from_bot.id == bot.me.id:
-        if bool(message.photo) and bool(message.caption):
-            text = message.caption
-            lines = text.splitlines()
+    if (
+        from_bot.id == bot.me.id
+        and bool(message.photo)
+        and bool(message.caption)
+    ):
+        text = message.caption
+        lines = text.splitlines()
 
-            for line in lines:
-                if "ID" in line:
-                    matches = re.match(r"ID: (\d+) \((\w+)\)", line)
-                    content_type = matches.group(2).lower()
-                    message.matches = [matches]
-                    if content_type == "anime":
-                        await anime_view(bot, message)
-                    elif content_type == "character":
-                        await character_view(bot, message)
-                    elif content_type == "manga":
-                        await manga_view(bot, message)
-                    break
+        for line in lines:
+            if "ID" in line:
+                matches = re.match(r"ID: (\d+) \((\w+)\)", line)
+                content_type = matches.group(2).lower()
+                message.matches = [matches]
+                if content_type == "anime":
+                    await anime_view(bot, message)
+                elif content_type == "character":
+                    await character_view(bot, message)
+                elif content_type == "manga":
+                    await manga_view(bot, message)
+                break
