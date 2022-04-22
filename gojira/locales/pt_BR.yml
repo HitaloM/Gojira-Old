@@ -2,207 +2,139 @@ LANGUAGE_CODE: "pt_BR"
 LANGUAGE_NAME: "Português"
 LANGUAGE_FLAG: "🇧🇷"
 
-back_button:
-    🔙 Voltar
-
+back_button: 🔙 Voltar
 
 # Words
 
-channel:
-    Canal
+channel: Canal
 
-group:
-    Grupo
+group: Grupo
 
-action:
-    Ação
+action: Ação
 
-shounen:
-    Shounen
+shounen: Shounen
 
-martial_arts:
-    Artes marciais
+martial_arts: Artes marciais
 
-adventure:
-    Aventura
+adventure: Aventura
 
-comedy:
-    Comédia
+comedy: Comédia
 
-ecchi:
-    Ecchi
+ecchi: Ecchi
 
-devils:
-    Demônios
+devils: Demônios
 
-drama:
-    Drama
+drama: Drama
 
-fantasy:
-    Fantasia
+fantasy: Fantasia
 
-yuri:
-    Yuri
+yuri: Yuri
 
-yaoi:
-    Yaoi
+yaoi: Yaoi
 
-school:
-    Escolar
+school: Escolar
 
-sports:
-    Esportes
+sports: Esportes
 
-space:
-    Espacial
+space: Espacial
 
-hentai:
-    Hentai
+hentai: Hentai
 
-isekai:
-    Isekai
+isekai: Isekai
 
-shoujo:
-    Shoujo
+shoujo: Shoujo
 
-fight:
-    Luta
+fight: Luta
 
-mystery:
-    Mistério
+mystery: Mistério
 
-supernatural:
-    Sobrenatural
+supernatural: Sobrenatural
 
-music:
-    Musical
+music: Musical
 
-slice_of_life:
-    Slice of life
+slice_of_life: Slice of life
 
-score:
-    Pontuação
+score: Pontuação
 
-status:
-    Status
+status: Status
 
-genres:
-    Gêneros
+genres: Gêneros
 
-studios:
-    Estúdios
+studios: Estúdios
 
-format:
-    Formato
+format: Formato
 
-start_date:
-    Data de início
+start_date: Data de início
 
-end_date:
-    Data final
+end_date: Data final
 
-short_description:
-    Descrição curta
+short_description: Descrição curta
 
-favorite:
-    Favorito
+favorite: Favorito
 
-notify:
-    Notificar
+notify: Notificar
 
-duration:
-    Duração
+duration: Duração
 
-episode:
-    Episódio
+episode: Episódio
 
-volume:
-    Volume
+volume: Volume
 
-chapter:
-    Capítulo
+chapter: Capítulo
 
-name:
-    Nome
+name: Nome
 
-season:
-    Temporada
+season: Temporada
 
-language:
-    Idioma
+language: Idioma
 
-notes:
-    Notas
+notes: Notas
 
-added_by:
-    Adicionado por
+added_by: Adicionado por
 
-video:
-    Vídeo
+video: Vídeo
 
-number:
-    Número
+number: Número
 
-user_informations:
-    Informações de usuário
+user_informations: Informações de usuário
 
-collaborator:
-    Colaborador
+collaborator: Colaborador
 
-yes:
-    Sim
+yes: Sim
 
-no:
-    Não
+no: Não
 
-episodes_added:
-    Episódios adicionados
+episodes_added: Episódios adicionados
 
-bad_quality:
-    Qualidade ruim
+bad_quality: Qualidade ruim
 
-wrong_episode:
-    Episódio errado
+wrong_episode: Episódio errado
 
-wrong_title:
-    Título errado
+wrong_title: Título errado
 
-other:
-    Outro
+other: Outro
 
-type:
-    Tipo
+type: Tipo
 
-date:
-    Data
+date: Data
 
-invalid_user:
-    Usuário inválido
+invalid_user: Usuário inválido
 
-episodes_viewed:
-    Episódios vistos
+episodes_viewed: Episódios vistos
 
-episodes_watched:
-    Episódios assistidos
+episodes_watched: Episódios assistidos
 
-similarity:
-    Similaridade
+similarity: Similaridade
 
-at:
-    Em
+at: Em
 
-views:
-    Visualizações
+views: Visualizações
 
-page:
-    Página
+page: Página
 
-artist:
-    Artista
+artist: Artista
 
-tags:
-    Tags
-
+tags: Tags
 
 # Texts & buttons
 
@@ -212,18 +144,15 @@ start_text: |
 start_text_2: |
     Olá {user_mention}, eu sou <b>{bot_name}</b>, um bot voltado para <i>otakus</i>, explore minhas funções usando os botões abaixos, você pode fazer bastante coisa. 😁
 
-start_button:
-    🔏 PM
+start_button: 🔏 PM
 
-help_button:
-    👮‍♀️ Ajuda
+help_button: 👮‍♀️ Ajuda
 
 about_text: |
     <b>{bot_name}</b> é um bot desenvolvido em <i>Python</i> com a biblioteca <b>MTProto Pyrogram</b>, feito para ser rápido, estável e completo quando se trata de animes.
     Links: {github} | {group}
 
-about_button:
-    👥 Sobre
+about_button: 👥 Sobre
 
 language_text: |
     Escolha abaixo o idioma desejado.
@@ -234,35 +163,29 @@ language_changed_alert: |
 not_admin: |
     Você não é um administrador!
 
-language_button:
-    🌐 Idioma
+language_button: 🌐 Idioma
 
-search_button:
-    🔎 Pesquisar
+search_button: 🔎 Pesquisar
 
 anime_text: |
     Você está na seção <b>anime</b>, use os botões abaixo para fazer o que deseja, ver algumas sugestões, ver seus animes favoritos, pesquisar, etc...
 
-anime_button:
-    👸 Anime
+anime_button: 👸 Anime
 
 manga_text: |
     Você está na seção <b>mangá</b>, use os botões abaixo para fazer o que deseja, ver algumas sugestões, ver seus mangás favoritos, pesquisar, etc...
 
-manga_button:
-    📖 Mangá
+manga_button: 📖 Mangá
 
 suggestions_text: |
     Abaixo estão <b>50</b> sugestões, espero que goste de alguma. 😅
 
-suggestions_button:
-    🍬 Sugestões
+suggestions_button: 🍬 Sugestões
 
 favorites_text: |
     Abaixo estão todos os items marcados como favorito.
 
-favorites_button:
-    ⭐ Favoritos
+favorites_button: ⭐ Favoritos
 
 categories_text: |
     Abaixo estão algumas categorias, escolha uma e encontre algo do seu gosto. 😆
@@ -270,37 +193,31 @@ categories_text: |
 categorie_text: |
     Abaixo estão até <b>50</b> resultados da categoria <b>{genre}</b>.
 
-categories_button:
-    🐛 Categorias
+categories_button: 🐛 Categorias
 
 upcoming_text: |
     Abaixo estão <b>50</b> items que ainda não foram lançados.
 
-upcoming_button:
-    🆕 Em breve
+upcoming_button: 🆕 Em breve
 
-donate_button:
-    🩸 Doar
+donate_button: 🩸 Doar
 
 view_more_text: |
     Aqui você conseguirá ver a descrição, personagens, equipe da staff e algumas outras coisas, faça bom uso. 🙃
 
-view_more_button:
-    👓 Ver mais
+view_more_button: 👓 Ver mais
 
 watch_list_anime_text: |
     Abaixo estão todos os episódios disponíveis. Divirta-se.
-    
+
     <b>Sobre os emojis</b>:
         🙈 - Nunca aberto
         👁️ - Apenas visto
         ✅ - Assistido
 
-watch_button:
-    📺 Assistir
+watch_button: 📺 Assistir
 
-description_button:
-    📜 Descrição
+description_button: 📜 Descrição
 
 characters_text: |
     Abaixo estão alguns personagens do item em questão.
@@ -308,17 +225,13 @@ characters_text: |
 staff_text: |
     Abaixo estão algumas pessoas do item em questão.
 
-characters_button:
-    🧑‍🤝‍🧑 Personagens
+characters_button: 🧑‍🤝‍🧑 Personagens
 
-studios_button:
-    🌆 Estúdios
+studios_button: 🌆 Estúdios
 
-staff_button:
-    👨‍💻 Staff
+staff_button: 👨‍💻 Staff
 
-trailer_button:
-    🎦 Trailer
+trailer_button: 🎦 Trailer
 
 manage_anime_text: |
     Abaixo estão todos os episódios adicionados.
@@ -326,67 +239,51 @@ manage_anime_text: |
 manage_episode_text: |
     Abaixo estão todas as informações do episódio (isto é apenas uma prévia).
 
-manage_button:
-    💼 Gerenciar
+manage_button: 💼 Gerenciar
 
 season_text: |
     Abaixo estão todas as temporadas disponíveis, escolha uma.
 
-season_button:
-    🌡️ Temporada
+season_button: 🌡️ Temporada
 
-add_button:
-    ➕ Adicionar
+add_button: ➕ Adicionar
 
-del_button:
-    ✖️ Excluir
+del_button: ✖️ Excluir
 
-del_season_button:
-    ✖️ Excluir temporada
+del_season_button: ✖️ Excluir temporada
 
 confirm_text: |
     Para continuar, confirme usando o botão abaixo.
 
-confirm_button:
-    ✔️ Confirmar
+confirm_button: ✔️ Confirmar
 
-cancel_button:
-    ✖️ Cancelar
+cancel_button: ✖️ Cancelar
 
 send_me_the_item_text: |
     Envie-me o item: <b>{item}</b>.
 
-mark_as_watched_button:
-    ✅ Marcar como assistido
+mark_as_watched_button: ✅ Marcar como assistido
 
-mark_as_unwatched_button:
-    👁️ Marcar como não assistido
+mark_as_unwatched_button: 👁️ Marcar como não assistido
 
-previous_button:
-    ⏪ Anterior
+previous_button: ⏪ Anterior
 
-next_button:
-    ⏩ Próximo
+next_button: ⏩ Próximo
 
-dot_button:
-    ⏺️
+dot_button: ⏺️
 
-report_text:
-    Ponha abaixo as informações do seu relatório.
+report_text: Ponha abaixo as informações do seu relatório.
 
-report_button:
-    ⛔ Reportar
+report_button: ⛔ Reportar
 
-request_content_text:
-    Escolha abaixo o idioma em que você quer ver o conteúdo.
+request_content_text: Escolha abaixo o idioma em que você quer ver o conteúdo.
 
 request_content_done_text: |
     Opa! O seu pedido de <b>{title}</b> (<code>{type}</code>) já se encontra disponível!
-    
+
     Use o botão abaixo para ver o conteúdo.
 
-request_content_button:
-    🙋‍♀️ Requisitar conteúdo
+request_content_button: 🙋‍♀️ Requisitar conteúdo
 
 notify_users_anime_subbed_text: |
     Opa! O anime <b>{title}</b> (<b>ID</b>: <code>{id}</code>) foi adicionado legendado!
@@ -406,26 +303,23 @@ notify_users_episode_season_subbed_text: |
 notify_users_episode_season_dubbed_text: |
     Opa! O novo episódio <code>{number}</code> da temporada <b>{season}</b> (dublado) de <b>{title}</b> (<b>ID</b>: <code>{id}</code>) foi adicionado!
 
-notify_users_button:
-    🛎️ Notificar usuários
+notify_users_button: 🛎️ Notificar usuários
 
-collaborator_button:
-    👷‍♀️ Colaborador
+collaborator_button: 👷‍♀️ Colaborador
 
 add_in_batch_text: |
     Envie-me todos os episódios com a legenda no seguinte formato: <code>Número | Título</code>
     <b>Ex</b>:
         <code>1 | Uzumaki Naruto Chegando</code>
-    
+
     Após isso, use o botão <b>{confirm_button}</b>.
-    
+
     Nota: <i>apenas o número do episódio é obrigatório</i>.
 
 add_in_batch_videos_text: |
     <b>{count}</b> vídeos foram detectados, iniciando adição em lotes...
 
-add_in_batch_button:
-    🔢 Adicionar em lote
+add_in_batch_button: 🔢 Adicionar em lote
 
 no_found_episodes_text: |
     Oops! Não encontrei nenhum episódio, se for um equívoco, informe aos responsáveis.
@@ -472,65 +366,47 @@ alert_sent_text: |
 how_to_use_text: |
     Assista à animação acima e veja como usar-me.
 
-how_to_use_button:
-    ❓ Como usar?
+how_to_use_button: ❓ Como usar?
 
-subtitled_button:
-    🈁 Legendado
+subtitled_button: 🈁 Legendado
 
-next_episode_button:
-    🎦 Próximo episódio
+next_episode_button: 🎦 Próximo episódio
 
-read_button:
-    📒 Ler
-
+read_button: 📒 Ler
 
 # Alerts
-added_to_favorites_alert:
-    Item adicionado a sua lista de favoritos com sucesso!
+added_to_favorites_alert: Item adicionado a sua lista de favoritos com sucesso!
 
-removed_from_favorites_alert:
-    Item removido da sua lista de favoritos com sucesso!
+removed_from_favorites_alert: Item removido da sua lista de favoritos com sucesso!
 
-notifications_linked_alert:
-    Notificações ligadas com sucesso!
+notifications_linked_alert: Notificações ligadas com sucesso!
 
-notifications_turned_off_alert:
-    Notificações desligadas com sucesso!
+notifications_turned_off_alert: Notificações desligadas com sucesso!
 
-unfinished_function_alert:
-    Opa! Essa função ainda não está pronta, aguarde por atualizações e fique ligado em nosso canal.
+unfinished_function_alert: Opa! Essa função ainda não está pronta, aguarde por atualizações e fique ligado em nosso canal.
 
-episode_already_exists_alert:
-    Um episódio com este mesmo número já existe.
+episode_already_exists_alert: Um episódio com este mesmo número já existe.
 
-confirm_save_episode_alert:
-    O episódio foi salvo com sucesso!
+confirm_save_episode_alert: O episódio foi salvo com sucesso!
 
-confirm_delete_episode_alert:
-    O episódio foi deletado com sucesso!
+confirm_delete_episode_alert: O episódio foi deletado com sucesso!
 
-very_short_video_alert:
-    O vídeo enviado é muito curto.
+very_short_video_alert: O vídeo enviado é muito curto.
 
 reported_in_last_24h_alert: |
     Você já reportou um episódio nas últimas 24h.
-    
+
     Data: {date}
 
-episode_successfully_reported_alert:
-    Episódio reportado com sucesso!
+episode_successfully_reported_alert: Episódio reportado com sucesso!
 
-request_sent_alert:
-    O seu pedido foi enviado para os nossos colaboradores, se os episódios forem encontrados, serão adicionados, aguarde...
+request_sent_alert: O seu pedido foi enviado para os nossos colaboradores, se os episódios forem encontrados, serão adicionados, aguarde...
 
 requested_in_last_24h_alert: |
     Este item já recebeu um pedido de conteúdo nas últimas 24h.
-    
+
     Data: {date}
 
-notified_users_alert:
-    Os usuários foram notificados com sucesso!
+notified_users_alert: Os usuários foram notificados com sucesso!
 
-only_1_episode_not_allowed_alert:
-    Só é permitido o envio em lote acima de 1 episódio.
+only_1_episode_not_allowed_alert: Só é permitido o envio em lote acima de 1 episódio.
