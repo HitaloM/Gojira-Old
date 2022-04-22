@@ -2,7 +2,6 @@
 # Copyright (c) 2022 Hitalo <https://github.com/HitaloSama>
 # Copyright (c) 2021 Andriel <https://github.com/AndrielFR>
 
-import asyncio
 import datetime
 import logging
 
@@ -12,7 +11,6 @@ from pyrogram.types import User
 
 import gojira
 from gojira.config import API_HASH, API_ID, BOT_TOKEN, SUDO_USERS
-from gojira.database.core import Database
 from gojira.utils import modules
 from gojira.utils.langs import get_languages, load_languages
 

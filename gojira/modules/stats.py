@@ -3,9 +3,7 @@
 # Copyright (c) 2021 Andriel <https://github.com/AndrielFR>
 
 import datetime
-import os
 import platform
-import shutil
 
 import humanize
 import psutil
