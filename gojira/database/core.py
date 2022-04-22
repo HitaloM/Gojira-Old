@@ -42,6 +42,16 @@ class Database(object):
                 item INTEGER,
                 type VARCHAR(7)
         );
+
+        CREATE TABLE IF NOT EXISTS nhentai (
+                id INTEGER PRIMARY KEY,
+                artist TEXT,
+                photo TEXT,
+                title TEXT,
+                pages TEXT,
+                tags TEXT,
+                url TEXT
+        );
         """
         )
 

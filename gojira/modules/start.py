@@ -34,12 +34,12 @@ async def start(bot: Gojira, union: Union[CallbackQuery, Message]):
             reply_markup=ikb(
                 [
                     [
-                        (lang.about_button, "about"),
-                        (lang.language_button, "language"),
-                    ],
-                    [
                         (lang.anime_button, "anime"),
                         (lang.manga_button, "manga"),
+                    ],
+                    [
+                        (lang.about_button, "about"),
+                        (lang.language_button, "language"),
                     ],
                 ]
             ),
