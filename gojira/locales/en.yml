@@ -138,19 +138,22 @@ tags: Tags
 
 # Texts & buttons
 
+github_button: 📦 GitHub
+
+group_button: 📚 Group
+
 start_text: |
-    Hello {user_mention}, I'm <b>{bot_name}</b>, a bot dedicated to <i>otakus</i>, tap the button below and learn more.
+    Hello {user_mention}! I'm the <b>{bot_name}</b>, a bot dedicated to <i>otakus</i>, tap the button below and learn more.
 
 start_text_2: |
-    Hello {user_mention}, I'm <b>{bot_name}</b>, a bot dedicated to <i>otakus</i>, explore my functions using the buttons below, you can do a lot of things. 😁
+    Hello {user_mention}! I'm the <b>{bot_name}</b>, a bot dedicated to <i>otakus</i>, explore my functions using the buttons below.
 
 start_button: 🔏 PM
 
 help_button: 👮‍♀️ Help
 
 about_text: |
-    <b>{bot_name}</b> is a bot developed in <i>Python</i> with the <b>MTProto Pyrogram</b> library, made to be fast, stable and complete when it comes to animes.
-    Links: {github} | {group}
+    <b>{bot_name}</b> is a bot developed in <i>Python</i> with the <b>MTProto Pyrogram</b> library, made to be fast, stable and complete about animes.
 
 about_button: 👥 About
 
