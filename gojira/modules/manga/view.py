@@ -92,10 +92,7 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         if hasattr(manga.title, "native"):
             text += f" (<code>{manga.title.native}</code>)"
         text += f"\n\n<b>ID</b>: <code>{manga.id}</code>"
-        if (
-            hasattr(manga, "score")
-            and hasattr(manga.score, "average")
-        ):
+        if hasattr(manga, "score") and hasattr(manga.score, "average"):
             text += f"\n<b>{lang.score}</b>: <code>{manga.score.average}</code>"
         text += f"\n<b>{lang.status}</b>: <code>{manga.status}</code>"
         if hasattr(manga, "genres"):
@@ -147,7 +144,8 @@ async def manga_view_more(bot: Gojira, callback: CallbackQuery):
         buttons = [
             (lang.description_button, f"manga description {manga_id} {user_id} 1"),
             (lang.characters_button, f"manga characters {manga_id} {user_id}"),
-            (lang.studios_button, f"manga studios {manga_id} {user_id}"),("🐢 Anilist", manga.url, "url")
+            (lang.studios_button, f"manga studios {manga_id} {user_id}"),
+            ("🐢 Anilist", manga.url, "url"),
         ]
 
         keyboard = array_chunk(buttons, 2)

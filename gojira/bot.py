@@ -14,16 +14,6 @@ from gojira.config import API_HASH, API_ID, BOT_TOKEN, SUDO_USERS
 from gojira.utils import modules
 from gojira.utils.langs import get_languages, load_languages
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(name)s.%(funcName)s | %(levelname)s | %(message)s",
-    datefmt="[%X]",
-)
-
-# To avoid some annoying log
-logging.getLogger("pyrogram.syncer").setLevel(logging.WARNING)
-logging.getLogger("pyrogram.client").setLevel(logging.WARNING)
-
 logger = logging.getLogger(__name__)
 
 
@@ -33,7 +23,7 @@ class Gojira(Client):
 
         super().__init__(
             session_name=name,
-            app_version=f"PyGodzilla v{gojira.__version__}",
+            app_version=f"Gojira v{gojira.__version__}",
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
@@ -59,7 +49,7 @@ class Gojira(Client):
 
         self.me = await self.get_me()
         logger.info(
-            "PyGodzilla running with Pyrogram v%s (Layer %s) started on @%s. Hi.",
+            "Gojira running with Pyrogram v%s (Layer %s) started on @%s. Hi!",
             __version__,
             layer,
             self.me.username,
@@ -67,9 +57,9 @@ class Gojira(Client):
 
         modules.load(self)
 
-    async def stop(self, *args):
-        await super().stop(*args)
-        logger.warning("PyGodzilla stopped. Bye.")
+    async def stop(self):
+        await super().stop()
+        logger.warning("Gojira stopped. Bye!")
 
     def is_sudo(self, user: User) -> bool:
         return user.id in self.sudos

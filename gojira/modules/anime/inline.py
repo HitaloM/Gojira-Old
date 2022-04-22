@@ -60,10 +60,7 @@ async def anime_inline(bot: Gojira, inline_query: InlineQuery):
             if hasattr(anime.title, "native"):
                 text += f" (<code>{anime.title.native}</code>)"
             text += f"\n\n<b>ID</b>: <code>{anime.id}</code> (<b>ANIME</b>)"
-            if (
-                hasattr(anime, "score")
-                and hasattr(anime.score, "average")
-            ):
+            if hasattr(anime, "score") and hasattr(anime.score, "average"):
                 text += f"\n<b>{lang.score}</b>: <code>{anime.score.average}</code>"
             text += f"\n<b>{lang.status}</b>: <code>{anime.status}</code>"
             if hasattr(anime, "genres"):

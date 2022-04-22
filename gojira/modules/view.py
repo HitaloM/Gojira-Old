@@ -17,11 +17,7 @@ from gojira.modules.manga.view import manga_view
 async def view(bot: Gojira, message: Message):
     from_bot = message.via_bot
 
-    if (
-        from_bot.id == bot.me.id
-        and bool(message.photo)
-        and bool(message.caption)
-    ):
+    if from_bot.id == bot.me.id and bool(message.photo) and bool(message.caption):
         text = message.caption
         lines = text.splitlines()
 

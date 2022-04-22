@@ -57,10 +57,7 @@ async def manga_inline(bot: Gojira, inline_query: InlineQuery):
             if hasattr(manga.title, "native"):
                 text += f" (<code>{manga.title.native}</code>)"
             text += f"\n\n<b>ID</b>: <code>{manga.id}</code> (<b>MANGA</b>)"
-            if (
-                hasattr(manga, "score")
-                and hasattr(manga.score, "average")
-            ):
+            if hasattr(manga, "score") and hasattr(manga.score, "average"):
                 text += f"\n<b>{lang.score}</b>: <code>{manga.score.average}</code>"
             text += f"\n<b>{lang.status}</b>: <code>{manga.status}</code>"
             if hasattr(manga, "genres"):

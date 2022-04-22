@@ -3,12 +3,24 @@
 # Copyright (c) 2021 Andriel <https://github.com/AndrielFR>
 
 import asyncio
+import logging
 
 from pyrogram.session import Session
 
 from gojira.bot import Gojira, logger
 from gojira.database import database
 from gojira.utils import is_windows
+
+# Custom logging format
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(name)s.%(funcName)s | %(levelname)s | %(message)s",
+    datefmt="[%X]",
+)
+
+# To avoid some annoying log
+logging.getLogger("pyrogram.syncer").setLevel(logging.WARNING)
+logging.getLogger("pyrogram.client").setLevel(logging.WARNING)
 
 # Use uvloop to improve speed if available
 try:
