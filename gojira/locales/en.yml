@@ -78,6 +78,8 @@ duration: Duration
 
 episode: Episode
 
+airing: Airing
+
 volume: Volume
 
 chapter: Chapter
@@ -228,6 +230,9 @@ characters_text: |
 staff_text: |
     Below are some persons from the item in question.
 
+airing_text: |
+    See below when the next episode of the anime in question will air.
+
 characters_button: 🧑‍🤝‍🧑 Characters
 
 studios_button: 🌆 Studios
@@ -235,6 +240,8 @@ studios_button: 🌆 Studios
 staff_button: 👨‍💻 Staff
 
 trailer_button: 🎦 Trailer
+
+airing_button: 📺 Airing
 
 manage_anime_text: |
     Below are all the added episodes.

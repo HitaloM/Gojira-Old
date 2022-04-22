@@ -16,6 +16,21 @@ from gojira.modules.favorites import get_favorite_button
 from gojira.utils.langs.decorators import use_chat_language
 
 
+def t(milliseconds: int) -> str:
+    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    tmp = (
+        ((str(days) + " Days, ") if days else "")
+        + ((str(hours) + " Hours, ") if hours else "")
+        + ((str(minutes) + " Minutes, ") if minutes else "")
+        + ((str(seconds) + " Seconds, ") if seconds else "")
+        + ((str(milliseconds) + " ms, ") if milliseconds else "")
+    )
+    return tmp[:-2]
+
+
 @Gojira.on_message(filters.cmd(r"anime (.+)"))
 @Gojira.on_callback_query(filters.regex(r"^anime (\d+)\s?(\d+)?\s?(\d+)?"))
 @use_chat_language()
@@ -150,6 +165,7 @@ async def anime_view_more(bot: Gojira, callback: CallbackQuery):
             (lang.description_button, f"anime description {anime_id} {user_id} 1"),
             (lang.characters_button, f"anime characters {anime_id} {user_id}"),
             (lang.staff_button, f"anime staff {anime_id} {user_id} 1"),
+            (lang.airing_button, f"anime airing {anime_id} {user_id}"),
         ]
 
         if hasattr(anime, "trailer") and hasattr(anime.trailer, "url"):
@@ -296,3 +312,37 @@ async def anime_view_staff(bot: Gojira, callback: CallbackQuery):
             staff_text,
             reply_markup=ikb(keyboard),
         )
+
+
+@Gojira.on_callback_query(filters.regex(r"^anime airing (\d+) (\d+)"))
+@use_chat_language()
+async def anime_view_airing(bot: Gojira, callback: CallbackQuery):
+    message = callback.message
+    user = callback.from_user
+    lang = callback._lang
+
+    anime_id = int(callback.matches[0].group(1))
+    user_id = int(callback.matches[0].group(2))
+
+    if user_id != user.id:
+        return
+
+    async with anilist.AsyncClient() as client:
+        anime = await client.get(anime_id)
+
+    text = f"{lang.airing_text}\n"
+    if hasattr(anime, "next_airing"):
+        airing_time = anime.next_airing.time_until * 1000
+        text += f"<b>{lang.episode}:</b> <code>{anime.next_airing.episode}</code>\n"
+        text += f"<b>{lang.airing}:</b> <code>{t(airing_time)}</code>"
+    else:
+        episodes = anime.episodes if hasattr(anime, "episodes") else "N/A"
+        text += f"<b>{lang.episode}:</b> <code>{episodes}</code>\n"
+        text += f"<b>{lang.airing}:</b> <code>N/A</code>"
+
+    keyboard = [[(lang.back_button, f"anime more {anime_id} {user_id}")]]
+
+    await message.edit_text(
+        text,
+        reply_markup=ikb(keyboard),
+    )
