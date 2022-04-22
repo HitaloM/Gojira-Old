@@ -147,10 +147,8 @@ async def manga_view_more(bot: Gojira, callback: CallbackQuery):
         buttons = [
             (lang.description_button, f"manga description {manga_id} {user_id} 1"),
             (lang.characters_button, f"manga characters {manga_id} {user_id}"),
-            (lang.studios_button, f"manga studios {manga_id} {user_id}"),
+            (lang.studios_button, f"manga studios {manga_id} {user_id}"),("🐢 Anilist", manga.url, "url")
         ]
-
-        buttons.append(("🐢 Anilist", manga.url, "url"))
 
         keyboard = array_chunk(buttons, 2)
 
