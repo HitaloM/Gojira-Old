@@ -23,16 +23,16 @@ from gojira.utils.langs.methods import get_user_lang
 @Gojira.on_message(filters.cmd(r"language$"))
 @Gojira.on_callback_query(filters.regex(r"^language$"))
 @use_chat_language()
-async def language(c: Gojira, m: Union[Message, CallbackQuery]):
-    lang = m._lang
-    if isinstance(m, Message):
-        chat = m.chat
-        user = m.from_user
+async def language(bot: Gojira, union: Union[Message, CallbackQuery]):
+    lang = union._lang
+    if isinstance(union, Message):
+        chat = union.chat
+        user = union.from_user
 
         if chat.type in ["group", "supergroup"]:
-            member = await c.get_chat_member(chat.id, user.id)
+            member = await bot.get_chat_member(chat.id, user.id)
             if member.status not in ["administrator", "creator"]:
-                await m.reply_text(
+                await union.reply_text(
                     lang.get_language(await get_user_lang(user.id)).not_admin
                 )
                 return
@@ -48,10 +48,14 @@ async def language(c: Gojira, m: Union[Message, CallbackQuery]):
 
     keyboard = array_chunk(buttons, 2)
 
-    if isinstance(m, CallbackQuery):
+    if isinstance(union, CallbackQuery):
         keyboard.append([(lang.back_button, "start")])
 
-    await (m.message.edit_text if isinstance(m, CallbackQuery) else m.reply_text)(
+    await (
+        union.message.edit_text
+        if isinstance(union, CallbackQuery)
+        else union.reply_text
+    )(
         lang.language_text.format(lang_name=lang.LANGUAGE_NAME),
         reply_markup=ikb(keyboard),
     )
@@ -59,23 +63,23 @@ async def language(c: Gojira, m: Union[Message, CallbackQuery]):
 
 @Gojira.on_callback_query(filters.regex(r"^language set (?P<code>\w+)"))
 @use_chat_language()
-async def language_set(c: Gojira, q: CallbackQuery):
-    message = q.message
+async def language_set(bot: Gojira, callback_query: CallbackQuery):
+    message = callback_query.message
     chat = message.chat
-    user = q.from_user
-    lang = q._lang
+    user = callback_query.from_user
+    lang = callback_query._lang
 
     if chat.type in ["group", "supergroup"]:
-        member = await c.get_chat_member(chat.id, user.id)
+        member = await bot.get_chat_member(chat.id, user.id)
         if member.status not in ["administrator", "creator"]:
-            await q.answer(
+            await callback_query.answer(
                 lang.get_language(await get_user_lang(user.id)).not_admin,
                 show_alert=True,
                 cache_time=60,
             )
             return
 
-    language_code = q.matches[0]["code"]
+    language_code = callback_query.matches[0]["code"]
 
     if chat.type == "private":
         await update_user_language(user.id, language_code)
@@ -90,9 +94,9 @@ async def language_set(c: Gojira, q: CallbackQuery):
     for line in bki(message.reply_markup):
         for button in line:
             if button[0] == lang.back_button:
-                await q.answer(text, show_alert=True)
+                await callback_query.answer(text, show_alert=True)
                 with suppress(MessageNotModified):
-                    await language(c, q)
+                    await language(bot, callback_query)
                 return
 
-    await q.edit_message_text(text)
+    await callback_query.edit_message_text(text)
