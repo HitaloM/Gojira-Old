@@ -63,23 +63,23 @@ async def language(bot: Gojira, union: Union[Message, CallbackQuery]):
 
 @Gojira.on_callback_query(filters.regex(r"^language set (?P<code>\w+)"))
 @use_chat_language()
-async def language_set(bot: Gojira, callback_query: CallbackQuery):
-    message = callback_query.message
+async def language_set(bot: Gojira, callback: CallbackQuery):
+    message = callback.message
     chat = message.chat
-    user = callback_query.from_user
-    lang = callback_query._lang
+    user = callback.from_user
+    lang = callback._lang
 
     if chat.type in ["group", "supergroup"]:
         member = await bot.get_chat_member(chat.id, user.id)
         if member.status not in ["administrator", "creator"]:
-            await callback_query.answer(
+            await callback.answer(
                 lang.get_language(await get_user_lang(user.id)).not_admin,
                 show_alert=True,
                 cache_time=60,
             )
             return
 
-    language_code = callback_query.matches[0]["code"]
+    language_code = callback.matches[0]["code"]
 
     if chat.type == "private":
         await update_user_language(user.id, language_code)
@@ -94,9 +94,9 @@ async def language_set(bot: Gojira, callback_query: CallbackQuery):
     for line in bki(message.reply_markup):
         for button in line:
             if button[0] == lang.back_button:
-                await callback_query.answer(text, show_alert=True)
+                await callback.answer(text, show_alert=True)
                 with suppress(MessageNotModified):
-                    await language(bot, callback_query)
+                    await language(bot, callback)
                 return
 
-    await callback_query.edit_message_text(text)
+    await callback.edit_message_text(text)
