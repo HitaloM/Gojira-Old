@@ -67,7 +67,7 @@ class Gojira(Client):
         modules.load(self)
 
         if CHATS["backup"]:
-            aiocron.crontab("0 * * * *", func=backup.save, args=(self), start=True)
+            aiocron.crontab("0 * * * *", func=backup.save, args=(self,), start=True)
         else:
             logger.info("Backups disabled.")
 
