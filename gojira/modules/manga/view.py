@@ -9,7 +9,7 @@ from typing import Union
 import anilist
 from pyrogram import filters
 from pyrogram.helpers import array_chunk, ikb
-from pyrogram.types import CallbackQuery, Message
+from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 
 from gojira.bot import Gojira
 from gojira.modules.favorites import get_favorite_button
@@ -77,8 +77,6 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         if manga is None:
             return
 
-        photo = f"https://img.anili.st/media/{manga_id}"
-
         text = f"<b>{manga.title.romaji}</b>"
         if hasattr(manga.title, "native"):
             text += f" (<code>{manga.title.native}</code>)"
@@ -106,7 +104,32 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
 
         keyboard = array_chunk(buttons, 2)
 
-        if bool(message.photo) and not bool(message.via_bot):
+        if hasattr(manga, "relations"):
+            relations_buttons = []
+            for relation in manga.relations:
+                if relation[0] in ["PREQUEL", "SEQUEL"]:
+                    relations_buttons.append(
+                        (
+                            lang.strings[lang.code][f"{relation[0].lower()}_button"],
+                            f"manga {relation[1].id} {user.id}",
+                        )
+                    )
+            if len(relations_buttons) > 0:
+                if not relations_buttons[0][0] == lang.prequel_button:
+                    relations_buttons = relations_buttons[::-1]
+                keyboard.append(relations_buttons)
+
+        photo = f"https://img.anili.st/media/{manga_id}"
+
+        if bool(message.photo) and is_callback:
+            await union.edit_message_media(
+                InputMediaPhoto(
+                    photo,
+                    caption=text,
+                ),
+                reply_markup=ikb(keyboard),
+            )
+        elif bool(message.photo) and not bool(message.via_bot):
             await message.edit_text(
                 text,
                 reply_markup=ikb(keyboard),
