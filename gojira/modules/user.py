@@ -23,7 +23,10 @@ async def user_view(bot: Gojira, message: Message):
         return
 
     async with anilist.AsyncClient() as client:
-        user = await client.get(query, "user")
+        try:
+            user = await client.get(query, "user")
+        except TypeError:
+            return
 
         if user is None:
             return
