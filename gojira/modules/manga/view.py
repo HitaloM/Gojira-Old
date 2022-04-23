@@ -192,6 +192,10 @@ async def manga_view_description(bot: Gojira, callback: CallbackQuery):
     async with anilist.AsyncClient() as client:
         manga = await client.get(manga_id, "manga")
 
+        if not hasattr(manga, "description"):
+            await callback.answer(lang.no_description_text, show_alert=True)
+            return
+
         description = manga.description
         amount = 1024
         page = 1 if page <= 0 else page

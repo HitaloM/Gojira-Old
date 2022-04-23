@@ -252,6 +252,9 @@ watch_list_anime_text: |
 
 watch_button: 📺 Assistir
 
+no_description_text: |
+    Não há descrição disponível.
+
 description_button: 📜 Descrição
 
 characters_text: |

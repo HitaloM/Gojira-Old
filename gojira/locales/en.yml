@@ -254,6 +254,9 @@ watch_button: 📺 Watch
 
 description_button: 📜 Description
 
+no_description_text: |
+    There is no description for this item.
+
 characters_text: |
     Below are some characters from the item in question.
 
