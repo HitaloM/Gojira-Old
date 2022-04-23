@@ -6,6 +6,28 @@ back_button: 🔙 Back
 
 # Words
 
+anime_stats: Anime Stats
+
+manga_stats: Manga Stats
+
+total_anime_watched: Total Anime Watched
+
+total_episode_watched: Total Episode Watched
+
+total_time_spent: Total Time Spent
+
+average_score: Average Score
+
+total_manga_read: Total Manga Read
+
+total_chapters_read: Total Chapters Read
+
+total_volumes_read: Total Volumes Read
+
+created_at: Created At
+
+updated_at: Updated At
+
 channel: Channel
 
 group: Group
