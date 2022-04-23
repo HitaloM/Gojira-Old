@@ -187,7 +187,7 @@ help_button: 👮‍♀️ Ajuda
 about_text: |
     <b>{bot_name}</b> é um bot desenvolvido em <i>Python</i> com a biblioteca <b>MTProto Pyrogram</b>, feito para ser rápido, estável e completo quando se trata de animes.
 
-about_button: 👥 Sobre
+about_button: ℹ️ Sobre
 
 language_text: |
     Escolha abaixo o idioma desejado.
@@ -210,10 +210,20 @@ anime_button: 👸 Anime
 manga_text: |
     Você está na seção <b>mangá</b>, use os botões abaixo para fazer o que deseja, ver algumas sugestões, ver seus mangás favoritos, pesquisar, etc...
 
+character_text: |
+    Você está na seção <b>personagens</b>, use os botões abaixo para fazer o que deseja, ver os mais populares, ver seus personagens favoritos, pesquisar, etc...
+
+character_button: 👤 Personagem
+
 manga_button: 📖 Mangá
 
 suggestions_text: |
     Abaixo estão <b>50</b> sugestões, espero que goste de alguma. 😅
+
+favourites_text: |
+    Abaixo estão os top <b>50</b> personagens mais favoritados.
+
+char_favs_button: 📈 Populares
 
 suggestions_button: 🍬 Sugestões
 

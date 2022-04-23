@@ -35,6 +35,7 @@ async def start(bot: Gojira, union: Union[CallbackQuery, Message]):
                 [
                     [
                         (lang.anime_button, "anime"),
+                        (lang.character_button, "character"),
                         (lang.manga_button, "manga"),
                     ],
                     [

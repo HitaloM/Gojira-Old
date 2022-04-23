@@ -7,10 +7,11 @@ from typing import Union
 
 import anilist
 from pyrogram import filters
-from pyrogram.helpers import ikb
+from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery, Message
 
 from gojira.bot import Gojira
+from gojira.modules.favorites import get_favorite_button
 from gojira.utils.langs.decorators import use_chat_language
 
 
@@ -89,11 +90,14 @@ async def character_view(bot: Gojira, union: Union[CallbackQuery, Message]):
             elif hasattr(character.image, "medium"):
                 photo = character.image.medium
 
-        keyboard = [
-            [
-                ("🐢 Anilist", character.url, "url"),
-            ],
-        ]
+        buttons = [("🐢 Anilist", character.url, "url")]
+
+        if is_private:
+            buttons.append(
+                await get_favorite_button(lang, user, "character", character.id)
+            )
+
+        keyboard = array_chunk(buttons, 2)
 
         if len(text) > 1024:
             text = text[:1021] + "..."
