@@ -122,9 +122,24 @@ async def anime_view(bot: Gojira, union: Union[CallbackQuery, Message]):
 
         keyboard = array_chunk(buttons, 2)
 
-        photo = f"https://img.anili.st/media/{anime.id}"
+        if hasattr(anime, "relations"):
+            relations_buttons = []
+            for relation in anime.relations:
+                if relation[0] in ["PREQUEL", "SEQUEL"]:
+                    relations_buttons.append(
+                        (
+                            lang.strings[lang.code][f"{relation[0].lower()}_button"],
+                            f"anime {relation[1].id} {user.id}",
+                        )
+                    )
+            if len(relations_buttons) > 0:
+                if not relations_buttons[0][0] == lang.prequel_button:
+                    relations_buttons = relations_buttons[::-1]
+                keyboard.append(relations_buttons)
 
-        if bool(message.video) and is_callback:
+        photo = f"https://img.anili.st/media/{anime_id}"
+
+        if bool(message.photo) and is_callback:
             await union.edit_message_media(
                 InputMediaPhoto(
                     photo,
