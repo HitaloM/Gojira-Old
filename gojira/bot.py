@@ -8,6 +8,7 @@ import logging
 import aiocron
 import sentry_sdk
 from pyrogram import Client, __version__
+from pyrogram.enums import ParseMode
 from pyrogram.errors import BadRequest
 from pyrogram.raw.all import layer
 from pyrogram.types import User
@@ -30,7 +31,7 @@ class Gojira(Client):
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
-            parse_mode="html",
+            parse_mode=ParseMode.HTML,
             workers=24,
             workdir="gojira",
             sleep_threshold=180,

@@ -8,6 +8,7 @@ from typing import List
 
 import anilist
 from pyrogram import filters
+from pyrogram.enums import ParseMode
 from pyrogram.errors import QueryIdInvalid
 from pyrogram.helpers import ikb
 from pyrogram.types import InlineQuery, InlineQueryResultPhoto
@@ -75,6 +76,7 @@ async def character_inline(bot: Gojira, inline_query: InlineQuery):
                     title=character.name.full,
                     description=description,
                     caption=text,
+                    parse_mode=ParseMode.DEFAULT,
                     reply_markup=ikb(keyboard),
                 )
             )

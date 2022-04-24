@@ -7,6 +7,7 @@ from typing import Union
 
 import anilist
 from pyrogram import filters
+from pyrogram.enums import ParseMode
 from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery, Message
 
@@ -108,12 +109,14 @@ async def character_view(bot: Gojira, union: Union[CallbackQuery, Message]):
 
         if len(photo) > 0:
             await message.reply_photo(
-                photo,
+                photo=photo,
                 caption=text,
+                parse_mode=ParseMode.DEFAULT,
                 reply_markup=ikb(keyboard),
             )
         else:
             await message.reply_text(
-                text,
+                text=text,
+                parse_mode=ParseMode.DEFAULT,
                 reply_markup=ikb(keyboard),
             )
