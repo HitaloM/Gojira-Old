@@ -14,7 +14,7 @@ from gojira.config import PREFIXES
 def filter_cmd(pattern: str, flags: int = 0) -> Callable:
     pattern = r"^" + f"[{re.escape(''.join(PREFIXES))}]" + pattern
     if not pattern.endswith(("$", " ")):
-        pattern += "(?:\s|$)"
+        pattern += r"(?:\s|$)"
 
     async def func(flt, bot, message: Message):
         value = message.text or message.caption
@@ -29,8 +29,6 @@ def filter_cmd(pattern: str, flags: int = 0) -> Callable:
                         + (" " if len(value.split()) > 1 else "")
                         + " ".join(value.split()[1:])
                     )
-                else:
-                    return False
 
             message.matches = list(flt.p.finditer(value)) or None
 
