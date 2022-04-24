@@ -2,7 +2,6 @@
 # Copyright (c) 2022 Hitalo <https://github.com/HitaloSama>
 # Copyright (c) 2021 Andriel <https://github.com/AndrielFR>
 
-import asyncio
 import datetime
 import io
 import os
@@ -17,20 +16,15 @@ from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery, Message
 
 from gojira.bot import Gojira
-from gojira.utils import modules
+from gojira.utils import modules, shell_exec
 
 
 @Gojira.on_message(filters.cmd(r"up(grad|dat)e$") & filters.sudo)
 async def upgrade_message(bot: Gojira, message: Message):
     sent = await message.reply_text("Checking for updates...")
 
-    await (await asyncio.create_subprocess_shell("git fetch origin")).communicate()
-    proc = await asyncio.create_subprocess_shell(
-        "git log HEAD..origin/main",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.STDOUT,
-    )
-    stdout = (await proc.communicate())[0].decode()
+    await shell_exec("git fetch origin")
+    stdout, proc = await shell_exec("git log HEAD..origin/main")
 
     if proc.returncode == 0:
         if len(stdout) > 0:
@@ -80,12 +74,7 @@ async def upgrade_callback(bot: Gojira, callback: CallbackQuery):
     await callback.edit_message_reply_markup({})
     sent = await callback.message.reply_text("Upgrading...")
 
-    proc = await asyncio.create_subprocess_shell(
-        "git reset --hard origin/main",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.STDOUT,
-    )
-    stdout = (await proc.communicate())[0].decode()
+    stdout, proc = await shell_exec("git reset --hard origin/main")
 
     if proc.returncode == 0:
         await sent.edit_text("Restarting...")
@@ -120,15 +109,9 @@ async def terminal_message(bot: Gojira, message: Message):
     code = message.text[len(command) + 1 :]
     sent = await message.reply_text("Running...")
 
-    proc = await asyncio.create_subprocess_shell(
-        code,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.STDOUT,
-    )
-    stdout = (await proc.communicate())[0]
+    stdout = await shell_exec(code)
 
-    lines = stdout.decode().splitlines()
-    output = "".join(f"<code>{line}</code>\n" for line in lines)
+    output = "".join(f"<code>{line}</code>\n" for line in stdout)
     output_message = f"<b>Input\n&gt;</b> <code>{code}</code>\n\n"
     if len(output) > 0:
         if len(output) > (4096 - len(output_message)):
