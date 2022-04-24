@@ -187,6 +187,8 @@ help_button: 👮‍♀️ Ajuda
 about_text: |
     <b>{bot_name}</b> é um bot desenvolvido em <i>Python</i> com a biblioteca <b>MTProto Pyrogram</b>, feito para ser rápido, estável e completo quando se trata de animes.
 
+    <b>Versão</b>: {version} (<code>{version_code}</code>)
+
 about_button: ℹ️ Sobre
 
 language_text: |

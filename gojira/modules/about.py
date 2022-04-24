@@ -36,7 +36,11 @@ async def about(bot: Gojira, union: Union[CallbackQuery, Message]):
         )
 
     await (message.edit_text if is_callback else message.reply_text)(
-        lang.about_text.format(bot_name=bot.me.first_name),
+        lang.about_text.format(
+            bot_name=bot.me.first_name,
+            version=f"<a href='https://github.com/HitaloSama/Gojira/commit/{bot.version}'>{bot.version}</a>",
+            version_code=bot.version_code,
+        ),
         disable_web_page_preview=True,
         reply_markup=ikb(keyboard),
     )
