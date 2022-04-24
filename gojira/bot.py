@@ -25,7 +25,7 @@ class Gojira(Client):
         name = self.__class__.__name__.lower()
 
         super().__init__(
-            session_name=name,
+            name=name,
             app_version=f"Gojira v{gojira.__version__}",
             api_id=API_ID,
             api_hash=API_HASH,

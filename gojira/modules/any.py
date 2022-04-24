@@ -2,7 +2,6 @@
 # Copyright (c) 2022 Hitalo <https://github.com/HitaloSama>
 # Copyright (c) 2021 Andriel <https://github.com/AndrielFR>
 
-from pyrogram import filters
 from pyrogram.types import CallbackQuery, InlineQuery, Message
 
 from gojira.bot import Gojira
@@ -46,6 +45,6 @@ async def set_language_inline_query(bot: Gojira, inline_query: InlineQuery):
         await register_user_by_dict(user.__dict__)
 
 
-@Gojira.on_message(filters.edited)
+@Gojira.on_edited_message
 async def edited(bot: Gojira, message: Message):
     message.stop_propagation()

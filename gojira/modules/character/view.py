@@ -110,12 +110,10 @@ async def character_view(bot: Gojira, union: Union[CallbackQuery, Message]):
             await message.reply_photo(
                 photo,
                 caption=text,
-                parse_mode="combined",
                 reply_markup=ikb(keyboard),
             )
         else:
             await message.reply_text(
                 text,
-                parse_mode="combined",
                 reply_markup=ikb(keyboard),
             )
