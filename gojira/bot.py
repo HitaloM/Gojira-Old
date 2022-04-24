@@ -83,6 +83,7 @@ class Gojira(Client):
                         f"<b>Gojira</b> <a href='https://github.com/HitaloSama/Gojira/commit/{self.version}'>{self.version}</a> (<code>{self.version_code}</code>) started!"
                         f"\n<b>Pyrogram</b> <code>v{__version__}</code> (Layer {layer})"
                     ),
+                    disable_web_page_preview=True,
                 )
         except BadRequest:
             logger.error("Error while sending the startup message.", exc_info=True)
