@@ -314,7 +314,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "Pyrogram"
-version = "2.0.7+amn"
+version = "2.0.13+amn"
 description = "Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots - Amano's experimental fork"
 category = "main"
 optional = false
@@ -330,7 +330,7 @@ pysocks = "1.7.1"
 type = "git"
 url = "https://github.com/AmanoTeam/Pyrogram"
 reference = "master"
-resolved_reference = "21d3a02c9852eb27603d4e2c44989bcb16d147da"
+resolved_reference = "de30adb1dea1839303b5f1fdd54647f396a63e12"
 
 [[package]]
 name = "pysocks"
@@ -478,6 +478,7 @@ optional = false
 python-versions = "*"
 
 [package.dependencies]
+httpx = {version = "*", optional = true, markers = "extra == \"aio\""}
 requests = "*"
 
 [package.extras]
@@ -563,7 +564,7 @@ fast = ["uvloop"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "8ceda356759e6ad7b99559ffe5bfbcc793de7729274783501086d7bde31d20df"
+content-hash = "7996f759a955e0a2ba9a1eafffaadb9129360a2707103b195c8d1de78e9c782c"
 
 [metadata.files]
 aiocron = [

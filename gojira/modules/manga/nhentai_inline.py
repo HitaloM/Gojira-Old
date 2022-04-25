@@ -6,11 +6,11 @@ import asyncio
 from typing import List
 
 import httpx
-import telegraph
 from pyrogram import filters
 from pyrogram.errors import QueryIdInvalid
 from pyrogram.helpers import ikb
 from pyrogram.types import InlineQuery, InlineQueryResultPhoto
+from telegraph.aio import Telegraph
 
 from gojira.bot import Gojira
 from gojira.database.nhentai import create_nhentai, get_nhentai_all, get_nhentai_by_id
@@ -90,8 +90,8 @@ async def get_data(m_id: int):
     if nhentai is None:
         artist, photo, title, pages, tags, url = (None,) * 6
 
-        tgph = telegraph.Telegraph()
-        tgph.create_account(
+        tgph = Telegraph()
+        await tgph.create_account(
             short_name="Gojira",
             author_name="@PyGodzillaBot",
             author_url="https://t.me/PyGodzillaBot",
@@ -132,7 +132,7 @@ async def get_data(m_id: int):
 
             await client.aclose()
 
-        page = tgph.create_page(
+        page = await tgph.create_page(
             title=title,
             html_content=html_content,
             author_name="@PyGodzillaBot",
