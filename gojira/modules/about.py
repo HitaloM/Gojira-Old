@@ -28,7 +28,7 @@ async def about(bot: Gojira, union: Union[CallbackQuery, Message]):
     ]
 
     is_private = await filters.private(bot, message)
-    if is_private and is_callback:
+    if is_private:
         keyboard.append(
             [
                 (lang.back_button, "start"),

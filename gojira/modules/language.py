@@ -6,6 +6,7 @@ from contextlib import suppress
 from typing import List, Tuple, Union
 
 from pyrogram import filters
+from pyrogram.enums import ChatMemberStatus, ChatType
 from pyrogram.errors import MessageNotModified
 from pyrogram.helpers import array_chunk, bki, ikb
 from pyrogram.types import CallbackQuery, Message
@@ -29,9 +30,12 @@ async def language(bot: Gojira, union: Union[Message, CallbackQuery]):
         chat = union.chat
         user = union.from_user
 
-        if chat.type in ["group", "supergroup"]:
+        if chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
             member = await bot.get_chat_member(chat.id, user.id)
-            if member.status not in ["administrator", "creator"]:
+            if member.status not in (
+                ChatMemberStatus.ADMINISTRATOR,
+                ChatMemberStatus.OWNER,
+            ):
                 await union.reply_text(
                     lang.get_language(await get_user_lang(user.id)).not_admin
                 )
@@ -69,9 +73,12 @@ async def language_set(bot: Gojira, callback: CallbackQuery):
     user = callback.from_user
     lang = callback._lang
 
-    if chat.type in ["group", "supergroup"]:
+    if chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
         member = await bot.get_chat_member(chat.id, user.id)
-        if member.status not in ["administrator", "creator"]:
+        if member.status not in (
+            ChatMemberStatus.ADMINISTRATOR,
+            ChatMemberStatus.OWNER,
+        ):
             await callback.answer(
                 lang.get_language(await get_user_lang(user.id)).not_admin,
                 show_alert=True,
@@ -81,7 +88,7 @@ async def language_set(bot: Gojira, callback: CallbackQuery):
 
     language_code = callback.matches[0]["code"]
 
-    if chat.type == "private":
+    if chat.type == ChatType.PRIVATE:
         await update_user_language(user.id, language_code)
         user_languages[user.id] = language_code
     else:

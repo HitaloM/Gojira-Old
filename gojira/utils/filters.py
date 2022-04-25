@@ -6,6 +6,7 @@ import re
 from typing import Callable, Union
 
 from pyrogram import filters
+from pyrogram.enums import ChatMemberStatus
 from pyrogram.types import CallbackQuery, Message
 
 from gojira.config import PREFIXES
@@ -55,7 +56,7 @@ async def filter_administrator(_, bot, union: Union[CallbackQuery, Message]) -> 
     user = union.from_user
 
     member = await bot.get_chat_member(chat.id, user.id)
-    return member.status in ["administrator", "creator"]
+    return member.status in (ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER)
 
 
 filters.cmd = filter_cmd

@@ -11,6 +11,8 @@ async def update_chat_language(id: int, language_code: str):
     await conn.execute(
         "UPDATE chats SET language = ? WHERE id = ?", (language_code, id)
     )
+    if conn.total_changes <= 0:
+        raise AssertionError
     await conn.commit()
 
 
@@ -18,4 +20,6 @@ async def update_user_language(id: int, language_code: str):
     await conn.execute(
         "UPDATE users SET language = ? WHERE id = ?", (language_code, id)
     )
+    if conn.total_changes <= 0:
+        raise AssertionError
     await conn.commit()

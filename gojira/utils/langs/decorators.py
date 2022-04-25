@@ -6,6 +6,7 @@ from functools import wraps
 from typing import Callable, Union
 
 from pyrogram import Client
+from pyrogram.enums import ChatType
 from pyrogram.types import CallbackQuery, InlineQuery, Message
 
 from gojira.database.chats import get_chat_by_id
@@ -28,7 +29,7 @@ def use_chat_language() -> Callable:
             if not isinstance(union, InlineQuery):
                 chat = message.chat
 
-            if isinstance(union, InlineQuery) or chat.type == "private":
+            if isinstance(union, InlineQuery) or chat.type == ChatType.PRIVATE:
                 user_id = union.from_user.id
 
                 if user_id not in user_languages:

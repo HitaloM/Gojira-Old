@@ -38,11 +38,14 @@ Session.notice_displayed = True
 
 async def main() -> None:
     await database.connect()
+
     gojira = Gojira()
     await gojira.start()
     await idle()
     await gojira.stop()
-    await database.close()
+
+    if database.is_connected:
+        await database.close()
 
 
 if __name__ == "__main__":
