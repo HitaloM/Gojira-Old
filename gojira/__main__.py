@@ -5,6 +5,7 @@
 import asyncio
 import logging
 
+from pyrogram import idle
 from pyrogram.session import Session
 
 from gojira.bot import Gojira, logger
@@ -35,20 +36,25 @@ except ImportError:
 Session.notice_displayed = True
 
 
+async def main() -> None:
+    await database.connect()
+    gojira = Gojira()
+    await gojira.start()
+    await idle()
+    await gojira.stop()
+    await database.close()
+
+
 if __name__ == "__main__":
     # open new asyncio event loop
     event_policy = asyncio.get_event_loop_policy()
     event_loop = event_policy.new_event_loop()
     try:
-        # start the bot
-        event_loop.run_until_complete(database.connect())
-        Gojira().run()
+        # start the sqlite database and pyrogram client
+        event_loop.run_until_complete(main())
     except KeyboardInterrupt:
         # exit gracefully
         logger.warning("Forced stop... Bye!")
     finally:
-        # close Database if open
-        if database.is_connected:
-            event_loop.run_until_complete(database.close())
         # close asyncio event loop
         event_loop.close()
