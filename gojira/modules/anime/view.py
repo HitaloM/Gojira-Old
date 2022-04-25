@@ -7,6 +7,7 @@ import math
 from typing import Union
 
 import anilist
+import humanize
 from pyrogram import filters
 from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
@@ -14,21 +15,6 @@ from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 from gojira.bot import Gojira
 from gojira.modules.favorites import get_favorite_button
 from gojira.utils.langs.decorators import use_chat_language
-
-
-def t(milliseconds: int) -> str:
-    seconds, milliseconds = divmod(int(milliseconds), 1000)
-    minutes, seconds = divmod(seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    days, hours = divmod(hours, 24)
-    tmp = (
-        ((str(days) + " Days, ") if days else "")
-        + ((str(hours) + " Hours, ") if hours else "")
-        + ((str(minutes) + " Minutes, ") if minutes else "")
-        + ((str(seconds) + " Seconds, ") if seconds else "")
-        + ((str(milliseconds) + " ms, ") if milliseconds else "")
-    )
-    return tmp[:-2]
 
 
 @Gojira.on_message(filters.cmd(r"anime (.+)"))
@@ -351,9 +337,11 @@ async def anime_view_airing(bot: Gojira, callback: CallbackQuery):
 
     text = f"{lang.airing_text}\n"
     if hasattr(anime, "next_airing"):
-        airing_time = anime.next_airing.time_until * 1000
+        airing_time = anime.next_airing.time_until
         text += f"<b>{lang.episode}:</b> <code>{anime.next_airing.episode}</code>\n"
-        text += f"<b>{lang.airing}:</b> <code>{t(airing_time)}</code>"
+        text += (
+            f"<b>{lang.airing}:</b> <code>{humanize.precisedelta(airing_time)}</code>"
+        )
     else:
         episodes = anime.episodes if hasattr(anime, "episodes") else "N/A"
         text += f"<b>{lang.episode}:</b> <code>{episodes}</code>\n"

@@ -30,10 +30,10 @@ async def stats_view(bot: Gojira, message: Message):
     text += "\n<b>Chats</b>"
     users_count = await conn.execute("select count() from users")
     users_count = await users_count.fetchone()
-    text += f"\n    <b>Users</b>: {users_count[0]}"
+    text += f"\n    <b>Users</b>: <code>{users_count[0]}</code>"
     groups_count = await conn.execute("select count() from chats")
     groups_count = await groups_count.fetchone()
-    text += f"\n    <b>Groups</b>: {groups_count[0]}"
+    text += f"\n    <b>Groups</b>: <code>{groups_count[0]}</code>"
     text += "\n<b>System</b>"
     uname = platform.uname()
     text += f"\n    <b>OS</b>: <code>{uname.system}</code>"
