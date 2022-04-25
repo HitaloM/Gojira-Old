@@ -6,7 +6,7 @@ from contextlib import suppress
 from typing import List, Tuple, Union
 
 from pyrogram import filters
-from pyrogram.enums import ChatMemberStatus, ChatType
+from pyrogram.enums import ChatType
 from pyrogram.errors import MessageNotModified
 from pyrogram.helpers import array_chunk, bki, ikb
 from pyrogram.types import CallbackQuery, Message
@@ -31,14 +31,8 @@ async def language(bot: Gojira, union: Union[Message, CallbackQuery]):
         user = union.from_user
 
         if chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
-            member = await bot.get_chat_member(chat.id, user.id)
-            if member.status not in (
-                ChatMemberStatus.ADMINISTRATOR,
-                ChatMemberStatus.OWNER,
-            ):
-                await union.reply_text(
-                    lang.get_language(await get_user_lang(user.id)).not_admin
-                )
+            if not await filters.admin(bot, union):
+                await union.reply_text(lang.not_admin)
                 return
 
     buttons: List[Tuple] = []
@@ -74,11 +68,7 @@ async def language_set(bot: Gojira, callback: CallbackQuery):
     lang = callback._lang
 
     if chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
-        member = await bot.get_chat_member(chat.id, user.id)
-        if member.status not in (
-            ChatMemberStatus.ADMINISTRATOR,
-            ChatMemberStatus.OWNER,
-        ):
+        if not await filters.admin(bot, callback):
             await callback.answer(
                 lang.get_language(await get_user_lang(user.id)).not_admin,
                 show_alert=True,

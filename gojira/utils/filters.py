@@ -6,7 +6,7 @@ import re
 from typing import Callable, Union
 
 from pyrogram import filters
-from pyrogram.enums import ChatMemberStatus
+from pyrogram.enums import ChatMemberStatus, ChatType
 from pyrogram.types import CallbackQuery, Message
 
 from gojira.config import PREFIXES
@@ -55,10 +55,13 @@ async def filter_administrator(_, bot, union: Union[CallbackQuery, Message]) -> 
     chat = message.chat
     user = union.from_user
 
+    if chat.type == ChatType.PRIVATE:
+        return True
+
     member = await bot.get_chat_member(chat.id, user.id)
     return member.status in (ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER)
 
 
 filters.cmd = filter_cmd
 filters.sudo = filters.create(filter_sudo, "FilterSudo")
-filters.administrator = filters.create(filter_administrator, "FilterAdministrator")
+filters.admin = filters.create(filter_administrator, "FilterAdministrator")
