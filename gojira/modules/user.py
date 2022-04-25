@@ -50,6 +50,5 @@ async def user_view(bot: Gojira, message: Message):
     await message.reply_photo(
         photo=f"https://img.anili.st/user/{user.id}?a={time.time()}",
         caption=text,
-        parse_mode="combined",
         reply_markup=ikb(keyboard),
     )
