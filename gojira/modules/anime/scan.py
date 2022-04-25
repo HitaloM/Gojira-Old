@@ -7,6 +7,7 @@ from datetime import timedelta
 
 import httpx
 from pyrogram import filters
+from pyrogram.errors import BadRequest
 from pyrogram.helpers import bki, ikb
 from pyrogram.types import Document, InputMediaPhoto, Message, Video
 
@@ -114,7 +115,7 @@ async def anime_scan(bot: Gojira, message: Message):
         if video is not None:
             try:
                 sent_video = await sent.reply_video(
-                    video,
+                    video=f"{video}&size=l",
                     caption=f"<code>{file_name}</code>\n\n<code>{from_time}</code> - <code>{to_time}</code>",
                 )
 
@@ -123,7 +124,7 @@ async def anime_scan(bot: Gojira, message: Message):
                 await sent.edit_reply_markup(
                     reply_markup=ikb(keyboard),
                 )
-            except BaseException:
+            except BadRequest:
                 pass
 
         await client.aclose()
