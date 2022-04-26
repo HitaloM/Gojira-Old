@@ -128,9 +128,16 @@ start_text: |
     Hello {user_mention}! I'm the <b>{bot_name}</b>, a bot dedicated to <i>otakus</i>, tap the button below and learn more.
 
 start_text_2: |
-    Hello {user_mention}! I'm the <b>{bot_name}</b>, a bot dedicated to <i>otakus</i>, explore my functions using the buttons below.
+    Hello {user_mention}! I'm the <b>{bot_name}</b>, and I'm alive!
 
 start_button: 🔏 PM
+
+help_text: |
+    Click in the buttons below to get help!
+
+help_text_2: |
+    Hello {user_mention}! I'm the <b>{bot_name}</b>, a bot dedicated to <i>otakus</i>, use the button below to get help.
+
 
 help_button: 👮‍♀️ Help
 
@@ -167,13 +174,16 @@ manga_button: 📖 Manga
 character_text: |
     You are in the <b>character</b> section, use the buttons below to do what you want, see popular characters, see your favorite character, search, etc...
 
+staff_section_text: |
+    You are in the <b>staff</b> section, use the buttons below to do what you want, see popular staff, see your favorite staff, search, etc...
+
 character_button: 👤 Character
 
 suggestions_text: |
     Below are <b>50</b> suggestions, I hope you like some. 😅
 
 favourites_text: |
-    Below are top <b>50</b> most favourites characters.
+    Below are top <b>50</b> most favourites.
 
 char_favs_button: 📈 Popular
 

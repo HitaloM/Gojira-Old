@@ -33,6 +33,6 @@ async def staff_start(bot: Gojira, union: Union[CallbackQuery, Message]):
         keyboard.append([(lang.back_button, "help")])
 
     await (message.edit_text if is_callback else message.reply_text)(
-        lang.character_text,
+        lang.staff_section_text,
         reply_markup=ikb(keyboard),
     )

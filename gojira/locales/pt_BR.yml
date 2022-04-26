@@ -133,12 +133,18 @@ github_button: 📦 GitHub
 group_button: 📚 Grupo
 
 start_text: |
-    Olá {user_mention}! Eu sou o <b>{bot_name}</b>, um bot voltado para <i>otakus</i>, toque no botão abaixo e saiba mais.
+    Olá {user_mention}! Eu sou o <b>{bot_name}</b>, um bot voltado para <i>otakus</i>, use os botões abaixo e saiba mais.
 
 start_text_2: |
-    Olá {user_mention}! Eu sou o <b>{bot_name}</b>, um bot voltado para <i>otakus</i>, explore minhas funções usando os botões abaixo.
+    Olá {user_mention}! Eu sou o <b>{bot_name}</b>, e eu estou vivo!
 
 start_button: 🔏 PM
+
+help_text: |
+    Clique nos botões abaixo para obter ajuda!
+
+help_text_2: |
+    Olá {user_mention}! Eu sou o <b>{bot_name}</b>, um bot voltado para <i>otakus</i>, use o botão abaixo para obter ajuda.
 
 help_button: 👮‍♀️ Ajuda
 
@@ -173,6 +179,9 @@ manga_text: |
 character_text: |
     Você está na seção <b>personagens</b>, use os botões abaixo para fazer o que deseja, ver os mais populares, ver seus personagens favoritos, pesquisar, etc...
 
+staff_section_text: |
+    Você está na seção <b>staff</b>, use os botões abaixo para fazer o que deseja, ver os mais populares, ver seus staffs favoritos, pesquisar, etc...
+
 character_button: 👤 Personagem
 
 manga_button: 📖 Mangá
@@ -181,7 +190,7 @@ suggestions_text: |
     Abaixo estão <b>50</b> sugestões, espero que goste de alguma. 😅
 
 favourites_text: |
-    Abaixo estão os top <b>50</b> personagens mais favoritados.
+    Abaixo estão os top <b>50</b> mais favoritados.
 
 char_favs_button: 📈 Populares
 

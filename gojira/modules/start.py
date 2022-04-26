@@ -28,7 +28,7 @@ async def start(bot: Gojira, union: Union[CallbackQuery, Message]):
 
     if await filters.private(bot, message):
         await (message.edit_text if is_callback else message.reply_text)(
-            lang.start_text_2.format(
+            lang.start_text.format(
                 user_mention=user.mention(),
                 bot_name=bot.me.first_name,
             ),
@@ -46,20 +46,9 @@ async def start(bot: Gojira, union: Union[CallbackQuery, Message]):
         )
     else:
         await message.reply_text(
-            lang.start_text.format(
+            lang.start_text_2.format(
                 user_mention=user.mention(),
                 bot_name=bot.me.first_name,
-            ),
-            reply_markup=ikb(
-                [
-                    [
-                        (
-                            lang.start_button,
-                            f"https://t.me/{bot.me.username}?start=",
-                            "url",
-                        )
-                    ]
-                ]
             ),
         )
 
@@ -71,11 +60,12 @@ async def start(bot: Gojira, union: Union[CallbackQuery, Message]):
 async def help(bot: Gojira, union: Union[Message, CallbackQuery]):
     is_callback = isinstance(union, CallbackQuery)
     message = union.message if is_callback else union
+    user = union.from_user
     lang = union._lang
 
     if await filters.private(bot, message):
         await (message.edit_text if is_callback else message.reply_text)(
-            text=lang.help_text_2,
+            lang.help_text,
             reply_markup=ikb(
                 [
                     [
@@ -94,7 +84,10 @@ async def help(bot: Gojira, union: Union[Message, CallbackQuery]):
         )
     else:
         await message.reply_text(
-            text=lang.help_text,
+            lang.help_text_2.format(
+                user_mention=user.mention(),
+                bot_name=bot.me.first_name,
+            ),
             reply_markup=ikb(
                 [
                     [
