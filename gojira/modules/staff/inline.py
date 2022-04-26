@@ -17,46 +17,46 @@ from gojira.bot import Gojira
 from gojira.utils.langs.decorators import use_chat_language
 
 
-@Gojira.on_inline_query(filters.regex(r"^!c (?P<query>.+)"))
+@Gojira.on_inline_query(filters.regex(r"^!s (?P<query>.+)"))
 @use_chat_language()
-async def character_inline(bot: Gojira, inline_query: InlineQuery):
+async def staff_inline(bot: Gojira, inline_query: InlineQuery):
     query = inline_query.matches[0]["query"].strip()
     lang = inline_query._lang
 
     results: List[InlineQueryResultPhoto] = []
 
     async with anilist.AsyncClient() as client:
-        search_results = await client.search(query, "character", page=1, limit=15)
+        search_results = await client.search(query, "staff", page=1, limit=15)
         while search_results is None:
             await asyncio.sleep(0.5)
-            search_results = await client.search(query, "character", page=1, limit=10)
+            search_results = await client.search(query, "staff", page=1, limit=10)
 
         for result in search_results:
-            character = await client.get(result.id, "character")
+            staff = await client.get(result.id, "staff")
 
-            if character is None:
+            if staff is None:
                 continue
 
             photo: str = ""
-            if hasattr(character, "image"):
-                if hasattr(character.image, "large"):
-                    photo = character.image.large
-                elif hasattr(character.image, "medium"):
-                    photo = character.image.medium
+            if hasattr(staff, "image"):
+                if hasattr(staff.image, "large"):
+                    photo = staff.image.large
+                elif hasattr(staff.image, "medium"):
+                    photo = staff.image.medium
 
             description: str = ""
-            if hasattr(character, "description"):
-                description = character.description
+            if hasattr(staff, "description"):
+                description = staff.description
                 description = description.replace("__", "")
                 description = description.replace("**", "")
                 description = description.replace("~", "")
                 description = re.sub(re.compile(r"<.*?>"), "", description)
                 description = description[0:260] + "..."
 
-            text = f"<b>{character.name.full}</b>"
-            text += f"\n<b>ID</b>: <code>{character.id}</code> (<b>CHARACTER</b>)"
-            if hasattr(character, "favorites"):
-                text += f"\n<b>{lang.favorite}s</b>: <code>{character.favorites}</code>"
+            text = f"<b>{staff.name.full}</b>"
+            text += f"\n<b>ID</b>: <code>{staff.id}</code> (<b>STAFF</b>)"
+            if hasattr(staff, "favorites"):
+                text += f"\n<b>{lang.favorite}s</b>: <code>{staff.favorites}</code>"
 
             text += f"\n\n{description}"
 
@@ -64,7 +64,7 @@ async def character_inline(bot: Gojira, inline_query: InlineQuery):
                 [
                     (
                         lang.view_more_button,
-                        f"https://t.me/{bot.me.username}/?start=character_{character.id}",
+                        f"https://t.me/{bot.me.username}/?start=staff_{staff.id}",
                         "url",
                     )
                 ],
@@ -73,7 +73,7 @@ async def character_inline(bot: Gojira, inline_query: InlineQuery):
             results.append(
                 InlineQueryResultPhoto(
                     photo_url=photo,
-                    title=character.name.full,
+                    title=staff.name.full,
                     description=description,
                     caption=text,
                     parse_mode=ParseMode.DEFAULT,

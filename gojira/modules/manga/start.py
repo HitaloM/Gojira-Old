@@ -40,7 +40,7 @@ async def manga_start(bot: Gojira, union: Union[CallbackQuery, Message]):
     ]
 
     if is_callback:
-        keyboard.append([(lang.back_button, "start")])
+        keyboard.append([(lang.back_button, "help")])
 
     await (message.edit_text if is_callback else message.reply_text)(
         lang.manga_text,

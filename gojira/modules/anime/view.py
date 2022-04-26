@@ -38,8 +38,8 @@ async def anime_view(bot: Gojira, union: Union[CallbackQuery, Message]):
             if user_id != user.id:
                 return
 
-        to_delete = union.matches[0].group(3)
-        if bool(to_delete) and not is_private:
+        is_search = union.matches[0].group(3)
+        if bool(is_search) and not is_private:
             await message.delete()
 
     if not bool(query):
@@ -291,7 +291,7 @@ async def anime_view_staff(bot: Gojira, callback: CallbackQuery):
 
         staffs = sorted(anime.staff, key=lambda staff: staff.id)
         for person in staffs:
-            staff_text += f"\n• <code>{person.id}</code> - {person.name.full} (<i>{person.role}</i>)"
+            staff_text += f"\n• <code>{person.id}</code> - <a href='https://t.me/{bot.me.username}/?start=staff_{person.id}'>{person.name.full}</a> (<i>{person.role}</i>)"
 
         amount = 1024
         page = 1 if page <= 0 else page

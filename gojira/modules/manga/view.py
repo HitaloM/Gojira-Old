@@ -281,7 +281,7 @@ async def manga_view_staff(bot: Gojira, callback: CallbackQuery):
 
         staffs = sorted(manga.staff, key=lambda staff: staff.id)
         for person in staffs:
-            staff_text += f"\n• <code>{person.id}</code> - {person.name.full} (<i>{person.role}</i>)"
+            staff_text += f"\n• <code>{person.id}</code> - <a href='https://t.me/{bot.me.username}/?start=staff_{person.id}'>{person.name.full}</a> (<i>{person.role}</i>)"
 
         amount = 1024
         page = 1 if page <= 0 else page

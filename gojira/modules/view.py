@@ -11,6 +11,7 @@ from gojira.bot import Gojira
 from gojira.modules.anime.view import anime_view
 from gojira.modules.character.view import character_view
 from gojira.modules.manga.view import manga_view
+from gojira.modules.staff.view import staff_view
 
 
 @Gojira.on_message(filters.private & filters.via_bot)
@@ -30,6 +31,7 @@ async def view(bot: Gojira, message: Message):
                     await anime_view(bot, message)
                 elif content_type == "character":
                     await character_view(bot, message)
-                elif content_type == "manga":
+                elif content_type == "staff":
+                    await staff_view(bot, message)
+                else:
                     await manga_view(bot, message)
-                break

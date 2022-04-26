@@ -101,8 +101,8 @@ async def get_data(m_id: int):
         async with httpx.AsyncClient(http2=True) as client:
             response = await client.get(f"https://nhentai.net/api/gallery/{m_id}")
             while not response.status_code == 200:
-                response = await client.get(f"https://nhentai.net/api/gallery/{m_id}")
                 await asyncio.sleep(0.5)
+                response = await client.get(f"https://nhentai.net/api/gallery/{m_id}")
 
             res = response.json()
             pages = res["images"]["pages"]

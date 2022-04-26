@@ -27,8 +27,8 @@ async def manga_inline(bot: Gojira, inline_query: InlineQuery):
     async with anilist.AsyncClient() as client:
         search_results = await client.search(query, "manga", page=1, limit=15)
         while search_results is None:
+            await asyncio.sleep(0.5)
             search_results = await client.search(query, "manga", page=1, limit=10)
-            await asyncio.sleep(5)
 
         for result in search_results:
             manga = await client.get(result.id, "manga")

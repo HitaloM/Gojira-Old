@@ -13,6 +13,7 @@ from gojira.bot import Gojira
 from gojira.modules.anime.view import anime_view
 from gojira.modules.character.view import character_view
 from gojira.modules.manga.view import manga_view
+from gojira.modules.staff.view import staff_view
 from gojira.utils.langs.decorators import use_chat_language
 
 
@@ -34,13 +35,11 @@ async def start(bot: Gojira, union: Union[CallbackQuery, Message]):
             reply_markup=ikb(
                 [
                     [
-                        (lang.anime_button, "anime"),
-                        (lang.character_button, "character"),
-                        (lang.manga_button, "manga"),
-                    ],
-                    [
                         (lang.about_button, "about"),
                         (lang.language_button, "language"),
+                    ],
+                    [
+                        (lang.help_button, "help"),
                     ],
                 ]
             ),
@@ -65,8 +64,53 @@ async def start(bot: Gojira, union: Union[CallbackQuery, Message]):
         )
 
 
+@Gojira.on_message(filters.cmd(r"help$"))
+@Gojira.on_message(filters.cmd(r"start help$") & filters.private)
+@Gojira.on_callback_query(filters.regex(r"^help$"))
+@use_chat_language()
+async def help(bot: Gojira, union: Union[Message, CallbackQuery]):
+    is_callback = isinstance(union, CallbackQuery)
+    message = union.message if is_callback else union
+    lang = union._lang
+
+    if await filters.private(bot, message):
+        await (message.edit_text if is_callback else message.reply_text)(
+            text=lang.help_text_2,
+            reply_markup=ikb(
+                [
+                    [
+                        (lang.anime_button, "anime"),
+                        (lang.manga_button, "manga"),
+                    ],
+                    [
+                        (lang.character_button, "character"),
+                        (lang.staff_button, "staff"),
+                    ],
+                    [
+                        (lang.back_button, "start"),
+                    ],
+                ]
+            ),
+        )
+    else:
+        await message.reply_text(
+            text=lang.help_text,
+            reply_markup=ikb(
+                [
+                    [
+                        (
+                            lang.start_button,
+                            f"https://t.me/{bot.me.username}?start=help",
+                            "url",
+                        )
+                    ]
+                ]
+            ),
+        )
+
+
 @Gojira.on_message(
-    filters.cmd(r"start (?P<content_type>anime|character|manga)_(\d+)")
+    filters.cmd(r"start (?P<content_type>anime|character|staff|manga)_(\d+)")
     & filters.private
 )
 async def view(bot: Gojira, message: Message):
@@ -79,5 +123,7 @@ async def view(bot: Gojira, message: Message):
         await anime_view(bot, message)
     elif content_type == "character":
         await character_view(bot, message)
+    elif content_type == "staff":
+        await staff_view(bot, message)
     else:
         await manga_view(bot, message)
