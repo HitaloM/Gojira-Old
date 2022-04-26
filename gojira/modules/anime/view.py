@@ -7,6 +7,7 @@ import math
 from typing import Union
 
 import anilist
+import httpx
 import humanize
 from pyrogram import filters
 from pyrogram.helpers import array_chunk, ikb
@@ -347,7 +348,45 @@ async def anime_view_airing(bot: Gojira, callback: CallbackQuery):
         text += f"<b>{lang.episode}:</b> <code>{episodes}</code>\n"
         text += f"<b>{lang.airing}:</b> <code>N/A</code>"
 
-    keyboard = [[(lang.back_button, f"anime more {anime_id} {user_id}")]]
+    async with httpx.AsyncClient(http2=True) as client:
+        response = await client.post(
+            url="https://graphql.anilist.co",
+            json=dict(
+                query="""
+                query($id: Int) {
+                    Page(page: 1, perPage: 1) {
+                        media(id: $id, type: ANIME) {
+                            externalLinks {
+                                id
+                                url
+                                site
+                                type
+                            }
+                        }
+                    }
+                }
+                """,
+                variables=dict(
+                    id=int(anime_id),
+                ),
+            ),
+            headers={
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+        )
+        data = response.json()
+        await client.aclose()
+        buttons = []
+        if data["data"]:
+            externalLinks = data["data"]["Page"]["media"][0]["externalLinks"]
+            for link in externalLinks:
+                if link["type"] == "STREAMING":
+                    buttons.append((link["site"], link["url"], "url"))
+
+    keyboard = array_chunk(buttons, 3)
+
+    keyboard.append([(lang.back_button, f"anime more {anime_id} {user_id}")])
 
     await message.edit_text(
         text,
