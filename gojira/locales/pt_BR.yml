@@ -120,6 +120,18 @@ tags: Tags
 
 # Texts & buttons
 
+empty_message_text: |
+    A mensagem não pode estar vazia.
+
+no_chat_found_text: |
+    Nenhum chat foi encontrado, verifique se está tudo certo.
+
+sending_alert_text: |
+    O alerta está sendo enviado, aguarde um pouco...
+
+alert_sent_text: |
+    O alerta foi enviado com sucesso a <code>{success}</code> chats e falhou o envio em <code>{failed}</code> chats.
+
 prequel_button: ⬅️ Prequela
 
 sequel_button: ➡️ Continuação
