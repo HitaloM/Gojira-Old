@@ -12,15 +12,18 @@ from gojira.database.users import get_user_by_id, register_user_by_dict
 
 @Gojira.on_message(group=-1)
 async def check_chat(bot: Gojira, message: Message):
-    user = await get_user_by_id(message.from_user.id)
+    chat = message.chat
+    user = message.from_user
+    if not user:
+        return
 
-    if message.chat.type == ChatType.PRIVATE and user is None:
-        await register_user_by_dict(message.from_user.__dict__)
+    if chat.type == ChatType.PRIVATE and await get_user_by_id(user.id) is None:
+        await register_user_by_dict(user.__dict__)
     if (
-        message.chat.type in (ChatType.GROUP, ChatType.SUPERGROUP)
-        and await get_chat_by_id(message.chat.id) is None
+        chat.type in (ChatType.GROUP, ChatType.SUPERGROUP)
+        and await get_chat_by_id(chat.id) is None
     ):
-        await register_chat_by_dict(message.chat.__dict__)
+        await register_chat_by_dict(chat.__dict__)
 
 
 @Gojira.on_callback_query(group=-1)
@@ -49,6 +52,6 @@ async def set_language_inline_query(bot: Gojira, inline_query: InlineQuery):
         await register_user_by_dict(user.__dict__)
 
 
-@Gojira.on_edited_message
+@Gojira.on_edited_message(group=-1)
 async def edited(bot: Gojira, message: Message):
     message.stop_propagation()
