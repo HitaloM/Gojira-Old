@@ -8,7 +8,6 @@ from typing import Dict, List
 class LangsFormatMap(dict):
     def __getitem__(self, key):
         if key in self:
-            self.used.append(key)
             if type(self.get(key)) is str:
                 return html.escape(self.get(key))
         return str("{" + key + "}")

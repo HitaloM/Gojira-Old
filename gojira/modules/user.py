@@ -34,6 +34,11 @@ async def user_view(bot: Gojira, union: Union[Message, CallbackQuery]):
             user_id = int(user_id)
 
             if user_id != user.id:
+                await union.answer(
+                    lang.button_not_for_you,
+                    show_alert=True,
+                    cache_time=60,
+                )
                 return
 
         is_search = union.matches[0].group(3)

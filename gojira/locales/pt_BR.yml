@@ -120,6 +120,8 @@ tags: Tags
 
 # Texts & buttons
 
+button_not_for_you: Este botão não é para você!
+
 empty_message_text: |
     A mensagem não pode estar vazia.
 

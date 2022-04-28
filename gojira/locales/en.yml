@@ -112,6 +112,8 @@ tags: Tags
 
 # Texts & buttons
 
+button_not_for_you: This buttons is not for you!
+
 empty_message_text: |
     The message cannot be empty.
 

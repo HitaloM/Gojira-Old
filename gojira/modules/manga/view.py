@@ -35,6 +35,11 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
             user_id = int(user_id)
 
             if user_id != user.id:
+                await union.answer(
+                    lang.button_not_for_you,
+                    show_alert=True,
+                    cache_time=60,
+                )
                 return
 
         is_search = union.matches[0].group(3)
@@ -153,6 +158,11 @@ async def manga_view_more(bot: Gojira, callback: CallbackQuery):
     user_id = int(callback.matches[0].group(2))
 
     if user_id != user.id:
+        await callback.answer(
+            lang.button_not_for_you,
+            show_alert=True,
+            cache_time=60,
+        )
         return
 
     async with anilist.AsyncClient() as client:
@@ -187,6 +197,11 @@ async def manga_view_description(bot: Gojira, callback: CallbackQuery):
     page = int(callback.matches[0].group(3))
 
     if user_id != user.id:
+        await callback.answer(
+            lang.button_not_for_you,
+            show_alert=True,
+            cache_time=60,
+        )
         return
 
     async with anilist.AsyncClient() as client:
@@ -238,6 +253,11 @@ async def manga_view_characters(bot: Gojira, callback: CallbackQuery):
     user_id = int(callback.matches[0].group(2))
 
     if user_id != user.id:
+        await callback.answer(
+            lang.button_not_for_you,
+            show_alert=True,
+            cache_time=60,
+        )
         return
 
     async with anilist.AsyncClient() as client:
@@ -272,6 +292,11 @@ async def manga_view_staff(bot: Gojira, callback: CallbackQuery):
     page = int(callback.matches[0].group(3))
 
     if user_id != user.id:
+        await callback.answer(
+            lang.button_not_for_you,
+            show_alert=True,
+            cache_time=60,
+        )
         return
 
     async with anilist.AsyncClient() as client:

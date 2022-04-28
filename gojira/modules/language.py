@@ -28,7 +28,6 @@ async def language(bot: Gojira, union: Union[Message, CallbackQuery]):
     lang = union._lang
     if isinstance(union, Message):
         chat = union.chat
-        user = union.from_user
 
         if chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
             if not await filters.admin(bot, union):
