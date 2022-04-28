@@ -314,7 +314,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "Pyrogram"
-version = "2.0.13+amn"
+version = "2.0.14+amn"
 description = "Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots - Amano's experimental fork"
 category = "main"
 optional = false
@@ -330,7 +330,7 @@ pysocks = "1.7.1"
 type = "git"
 url = "https://github.com/AmanoTeam/Pyrogram"
 reference = "master"
-resolved_reference = "79923c83fc5495576740381007515fb10386d028"
+resolved_reference = "911e766d2cb7fd7e8a445edf86190e132e93c0d9"
 
 [[package]]
 name = "pysocks"
@@ -359,7 +359,7 @@ testing = ["pytest (>=6.2)", "pytest-cov (>=2.12)", "tox (>=3.24)"]
 type = "git"
 url = "https://github.com/AmanoTeam/python-anilist"
 reference = "main"
-resolved_reference = "b815afec0d34ae5e17917e80278c9d526509f4ad"
+resolved_reference = "255b27c62a054e05418b7755c15a44c92a0b6ced"
 
 [[package]]
 name = "python-dateutil"
