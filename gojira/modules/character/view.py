@@ -86,8 +86,8 @@ async def character_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         text += f"\n<b>ID</b>: <code>{character.id}</code>"
         if hasattr(character, "favorites"):
             text += f"\n<b>{lang.favorite}s</b>: <code>{character.favorites}</code>"
-
-        text += f"\n\n{character.description}"
+        if hasattr(character, "description"):
+            text += f"\n\n{character.description}"
 
         photo: str = ""
         if hasattr(character, "image"):
