@@ -95,9 +95,9 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
             text += f"\n<b>{lang.volume}s</b>: <code>{manga.volumes}</code>"
         if hasattr(manga, "chapters"):
             text += f"\n<b>{lang.chapter}s</b>: <code>{manga.chapters}</code>"
-        if not manga.status.lower() == "not_yet_released":
+        if not manga.status == "NOT_YET_RELEASED":
             text += f"\n<b>{lang.start_date}</b>: <code>{manga.start_date.day if hasattr(manga.start_date, 'day') else 0}/{manga.start_date.month if hasattr(manga.start_date, 'month') else 0}/{manga.start_date.year if hasattr(manga.start_date, 'year') else 0}</code>"
-        if not manga.status.lower() in ["not_yet_released", "releasing"]:
+        if manga.status not in ["NOT_YET_RELEASED", "RELEASING"]:
             text += f"\n<b>{lang.end_date}</b>: <code>{manga.end_date.day if hasattr(manga.end_date, 'day') else 0}/{manga.end_date.month if hasattr(manga.end_date, 'month') else 0}/{manga.end_date.year if hasattr(manga.end_date, 'year') else 0}</code>"
 
         buttons = [

@@ -95,14 +95,15 @@ async def anime_view(bot: Gojira, union: Union[CallbackQuery, Message]):
             text += f"\n<b>{lang.genres}</b>: <code>{', '.join(anime.genres)}</code>"
         if hasattr(anime, "studios"):
             text += f"\n<b>{lang.studios}</b>: <code>{', '.join(anime.studios)}</code>"
-        text += f"\n<b>{lang.format}</b>: <code>{anime.format}</code>"
+        if hasattr(anime, "format"):
+            text += f"\n<b>{lang.format}</b>: <code>{anime.format}</code>"
         if hasattr(anime, "duration"):
             text += f"\n<b>{lang.duration}</b>: <code>{anime.duration}m</code>"
-        if not anime.format.lower() == "movie" and hasattr(anime, "episodes"):
+        if not anime.format == "MOVIE" and hasattr(anime, "episodes"):
             text += f"\n<b>{lang.episode}s</b>: <code>{anime.episodes}</code>"
-        if not anime.status.lower() == "not_yet_released":
+        if not anime.status == "NOT_YET_RELEASED":
             text += f"\n<b>{lang.start_date}</b>: <code>{anime.start_date.day if hasattr(anime.start_date, 'day') else 0}/{anime.start_date.month if hasattr(anime.start_date, 'month') else 0}/{anime.start_date.year if hasattr(anime.start_date, 'year') else 0}</code>"
-        if not anime.status.lower() in ["not_yet_released", "releasing"]:
+        if anime.status not in ["NOT_YET_RELEASED", "RELEASING"]:
             text += f"\n<b>{lang.end_date}</b>: <code>{anime.end_date.day if hasattr(anime.end_date, 'day') else 0}/{anime.end_date.month if hasattr(anime.end_date, 'month') else 0}/{anime.end_date.year if hasattr(anime.end_date, 'year') else 0}</code>"
 
         buttons = [
