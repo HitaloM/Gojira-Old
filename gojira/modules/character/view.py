@@ -110,7 +110,7 @@ async def character_view(bot: Gojira, union: Union[CallbackQuery, Message]):
 
         # Markdown
         text = text.replace("__", "**")
-        text = text.replace("~", "~~")
+        text = text.replace("~", "||")
 
         if len(photo) > 0:
             await message.reply_photo(

@@ -104,7 +104,7 @@ async def staff_view(bot: Gojira, union: Union[Message, CallbackQuery]):
 
         # Markdown
         text = text.replace("__", "**")
-        text = text.replace("~", "~~")
+        text = text.replace("~", "||")
 
         if len(photo) > 0:
             await message.reply_photo(
