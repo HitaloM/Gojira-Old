@@ -219,7 +219,11 @@ async def anime_view_description(bot: Gojira, callback: CallbackQuery):
         anime = await client.get(anime_id, "anime")
 
         if not hasattr(anime, "description"):
-            await callback.answer(lang.no_description_text, show_alert=True)
+            await callback.answer(
+                lang.no_description_text,
+                show_alert=True,
+                cache_time=60,
+            )
             return
 
         description = anime.description
@@ -280,6 +284,14 @@ async def anime_view_characters(bot: Gojira, callback: CallbackQuery):
             ],
         ]
 
+        if not hasattr(anime, "characters"):
+            await callback.answer(
+                lang.no_results_text,
+                show_alert=True,
+                cache_time=60,
+            )
+            return
+
         text = lang.characters_text
 
         characters = sorted(anime.characters, key=lambda character: character.id)
@@ -313,6 +325,14 @@ async def anime_view_staff(bot: Gojira, callback: CallbackQuery):
 
     async with anilist.AsyncClient() as client:
         anime = await client.get(anime_id, "anime")
+
+        if not hasattr(anime, "staff"):
+            await callback.answer(
+                lang.no_results_text,
+                show_alert=True,
+                cache_time=60,
+            )
+            return
 
         staff_text = lang.staff_text
 
