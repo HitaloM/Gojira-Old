@@ -19,9 +19,10 @@ from gojira.utils.langs.decorators import use_chat_language
 @use_chat_language()
 async def anime_scan(bot: Gojira, message: Message):
     reply = message.reply_to_message
+    user = message.from_user
     lang = message._lang
 
-    if reply.from_user.id == bot.me.id:
+    if user.id == bot.me.id:
         return
 
     if not reply.media:
@@ -101,7 +102,7 @@ async def anime_scan(bot: Gojira, message: Message):
             reply_markup=ikb(
                 [
                     [
-                        (lang.view_more_button, f"anime {anilist_id}"),
+                        (lang.view_more_button, f"anime {anilist_id} {user.id}"),
                     ]
                 ]
             ),
