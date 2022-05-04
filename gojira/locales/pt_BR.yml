@@ -144,7 +144,7 @@ something_wrong: Algo deu errado!
 
 github_button: 📦 GitHub
 
-group_button: 📚 Grupo
+channel_button: 📚 Canal
 
 start_text: |
     Olá {user_mention}! Eu sou o <b>{bot_name}</b>, um bot voltado para <i>otakus</i>, use os botões abaixo e saiba mais.

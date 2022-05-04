@@ -136,7 +136,7 @@ something_wrong: Something went wrong!
 
 github_button: 📦 GitHub
 
-group_button: 📚 Group
+channel_button: 📚 Channel
 
 start_text: |
     Hello {user_mention}! I'm the <b>{bot_name}</b>, a bot dedicated to <i>otakus</i>, tap the button below and learn more.

@@ -2,7 +2,7 @@
 # Copyright (c) 2022 Hitalo <https://github.com/HitaloSama>
 # Copyright (c) 2021 Andriel <https://github.com/AndrielFR>
 
-from typing import Dict, Union
+from typing import Union
 
 from pyrogram import filters
 from pyrogram.helpers import ikb
@@ -23,7 +23,7 @@ async def about(bot: Gojira, union: Union[CallbackQuery, Message]):
     keyboard = [
         [
             (lang.github_button, "https://github.com/HitaloSama/Gojira", "url"),
-            (lang.group_button, "https://t.me/SpamTherapy", "url"),
+            (lang.channel_button, "https://t.me/HitaloProjects", "url"),
         ]
     ]
 
