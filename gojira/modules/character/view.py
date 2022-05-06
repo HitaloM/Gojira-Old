@@ -57,6 +57,7 @@ async def character_view(bot: Gojira, union: Union[CallbackQuery, Message]):
                 results = await client.search(query, "character", page=1, limit=10)
 
             if results is None or len(results) == 0:
+                await message.reply_text(lang.no_results)
                 return
 
             if len(results) == 1:
@@ -80,7 +81,11 @@ async def character_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         character = await client.get(character_id, "character")
 
         if character is None:
-            await message.reply_text(lang.no_results_text)
+            await union.answer(
+                lang.no_results_text,
+                show_alert=True,
+                cache_time=60,
+            )
             return
 
         text = f"<b>{character.name.full}</b>"

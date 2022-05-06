@@ -51,6 +51,7 @@ async def staff_view(bot: Gojira, union: Union[Message, CallbackQuery]):
                 results = await client.search(query, "staff", page=1, limit=10)
 
             if results is None or len(results) == 0:
+                await message.reply_text(lang.no_results)
                 return
 
             if len(results) == 1:
@@ -74,7 +75,11 @@ async def staff_view(bot: Gojira, union: Union[Message, CallbackQuery]):
         staff = await client.get(staff_id, "staff")
 
         if staff is None:
-            await message.reply_text(lang.no_results_text)
+            await union.answer(
+                lang.no_results_text,
+                show_alert=True,
+                cache_time=60,
+            )
             return
 
         text = f"<b>{staff.name.full}</b>"

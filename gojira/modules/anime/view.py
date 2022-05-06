@@ -59,6 +59,7 @@ async def anime_view(bot: Gojira, union: Union[CallbackQuery, Message]):
                 results = await client.search(query, "anime", page=1, limit=10)
 
             if results is None or len(results) == 0:
+                await message.reply_text(lang.no_results_text)
                 return
 
             if len(results) == 1:
@@ -82,7 +83,11 @@ async def anime_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         anime = await client.get(anime_id, "anime")
 
         if anime is None:
-            await message.reply_text(lang.no_results_text)
+            await union.answer(
+                lang.no_results_text,
+                show_alert=True,
+                cache_time=60,
+            )
             return
 
         text = f"<b>{anime.title.romaji}</b>"
