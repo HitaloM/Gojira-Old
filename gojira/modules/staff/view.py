@@ -74,6 +74,7 @@ async def staff_view(bot: Gojira, union: Union[Message, CallbackQuery]):
         staff = await client.get(staff_id, "staff")
 
         if staff is None:
+            await message.reply_text(lang.no_results_text)
             return
 
         text = f"<b>{staff.name.full}</b>"

@@ -82,6 +82,7 @@ async def anime_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         anime = await client.get(anime_id, "anime")
 
         if anime is None:
+            await message.reply_text(lang.no_results_text)
             return
 
         text = f"<b>{anime.title.romaji}</b>"

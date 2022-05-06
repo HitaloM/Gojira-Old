@@ -80,6 +80,7 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         manga = await client.get(manga_id, "manga")
 
         if manga is None:
+            await message.reply_text(lang.no_results_text)
             return
 
         text = f"<b>{manga.title.romaji}</b>"

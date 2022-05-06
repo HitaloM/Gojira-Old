@@ -80,6 +80,7 @@ async def character_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         character = await client.get(character_id, "character")
 
         if character is None:
+            await message.reply_text(lang.no_results_text)
             return
 
         text = f"<b>{character.name.full}</b>"
