@@ -153,7 +153,11 @@ async def eval_message(bot: Gojira, message: Message):
                     (output.replace("<code>", "").replace("</code>", "")).encode()
                 )
                 document.name = "output.txt"
-                await bot.send_document(chat_id=message.chat.id, document=document)
+                await bot.send_document(
+                    chat_id=message.chat.id,
+                    document=document,
+                    reply_to_message_id=message.id,
+                )
             else:
                 output_message += f"<b>Output\n&gt;</b> {output}"
 
@@ -192,7 +196,11 @@ async def execute_message(bot: Gojira, message: Message):
                     (output.replace("<code>", "").replace("</code>", "")).encode()
                 )
                 document.name = "output.txt"
-                await bot.send_document(chat_id=message.chat.id, document=document)
+                await bot.send_document(
+                    chat_id=message.chat.id,
+                    document=document,
+                    reply_to_message_id=message.id,
+                )
             else:
                 output_message += f"<b>Output\n&gt;</b> {output}"
 

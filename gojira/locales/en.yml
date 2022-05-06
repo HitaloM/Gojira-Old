@@ -104,6 +104,8 @@ chapter: Chapter
 
 similarity: Similarity
 
+is_adult: "Is Adult"
+
 page: Page
 
 artist: Artist
