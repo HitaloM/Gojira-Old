@@ -13,12 +13,26 @@ from gojira.utils.langs.decorators import use_chat_language
 
 
 @Gojira.on_message(filters.cmd(r"quote$"))
-@Gojira.on_callback_query(filters.regex(r"^quote$"))
+@Gojira.on_callback_query(filters.regex(r"^quote (\d+)?"))
 @use_chat_language()
 async def quote_message(bot: Gojira, union: Union[Message, CallbackQuery]):
     is_callback = isinstance(union, CallbackQuery)
     message = union.message if is_callback else union
+    user = union.from_user
     lang = union._lang
+
+    if is_callback:
+        user_id = union.matches[0].group(1)
+        if user_id is not None:
+            user_id = int(user_id)
+
+            if user_id != user.id:
+                await union.answer(
+                    lang.button_not_for_you,
+                    show_alert=True,
+                    cache_time=60,
+                )
+                return
 
     if not is_callback:
         sent = await message.reply_text(lang.getting_quote)
@@ -31,9 +45,9 @@ async def quote_message(bot: Gojira, union: Union[Message, CallbackQuery]):
         data = response.json()
         await client.aclose()
 
-    text = f"<code>❝{data['quote']}❞</code>\n\n"
+    text = f"<code>{data['quote']}</code>\n\n"
     text += f"  ~ <b>{data['character']}</b> (<i>{data['anime']}</i>)"
 
-    button = [[("🔁", "quote")]]
+    button = [[("🔁", f"quote {user.id}")]]
 
     await (message if is_callback else sent).edit_text(text, reply_markup=ikb(button))
