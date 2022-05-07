@@ -73,6 +73,7 @@ async def user_view(bot: Gojira, union: Union[Message, CallbackQuery]):
                     ),
                     reply_markup=ikb(keyboard),
                 )
+                return
         else:
             query = str(query)
 
