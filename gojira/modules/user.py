@@ -8,7 +8,7 @@ from typing import Union
 
 import anilist
 import httpx
-from anilist.types import Statistic, StatisticsUnion
+from anilist.types import Statistic, User
 from pyrogram import filters
 from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
@@ -76,7 +76,45 @@ async def user_view(bot: Gojira, union: Union[Message, CallbackQuery]):
         else:
             query = str(query)
 
-        auser = await client.get(query, "user")
+        async with httpx.AsyncClient(http2=True) as client:
+            response = await client.post(
+                url="https://graphql.anilist.co",
+                json=dict(
+                    query="""
+                    query ($name: String) {
+                        User(name: $name) {
+                            id
+                            name
+                            about
+                            siteUrl
+                            donatorTier
+                            createdAt
+                            updatedAt
+                        }
+                    }
+                    """,
+                    variables=dict(
+                        name=query,
+                    ),
+                ),
+                headers={
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            )
+            data = response.json()
+            await client.aclose()
+
+        item = data["data"]["User"]
+        auser = User(
+            id=item["id"],
+            name=item["name"],
+            created_at=item["createdAt"],
+            updated_at=item["updatedAt"],
+            about=item["about"],
+            url=item["siteUrl"],
+            donator_tier=item["donatorTier"],
+        )
 
         if auser is None:
             await union.answer(
@@ -176,35 +214,31 @@ async def user_stats_view(bot: Gojira, callback: CallbackQuery):
         if data["data"]:
             item = data["data"]["User"]
 
-            stat_anime = item["statistics"]["anime"]
-            stat_manga = item["statistics"]["manga"]
-
-            statistics = StatisticsUnion(
-                anime=Statistic(
+            if stat_type == "anime":
+                stat_anime = item["statistics"]["anime"]
+                anime = Statistic(
                     count=stat_anime["count"],
                     mean_score=stat_anime["meanScore"],
                     minutes_watched=stat_anime["minutesWatched"],
                     episodes_watched=stat_anime["episodesWatched"],
-                ),
-                manga=Statistic(
+                )
+
+                text = f"{lang.total_anime_watched}: {anime.count}\n"
+                text += f"{lang.total_episode_watched}: {anime.episodes_watched}\n"
+                text += f"{lang.total_time_spent}: {anime.minutes_watched}\n"
+                text += f"{lang.average_score}: {anime.mean_score}"
+            else:
+                stat_manga = item["statistics"]["manga"]
+                manga = Statistic(
                     count=stat_manga["count"],
                     mean_score=stat_manga["meanScore"],
                     chapters_read=stat_manga["chaptersRead"],
                     volumes_read=stat_manga["volumesRead"],
-                ),
-            )
-
-            if stat_type == "anime":
-                text = f"{lang.total_anime_watched}: {statistics.anime.count}\n"
-                text += f"{lang.total_episode_watched}: {statistics.anime.episodes_watched}\n"
-                text += f"{lang.total_time_spent}: {statistics.anime.minutes_watched}\n"
-                text += f"{lang.average_score}: {statistics.anime.mean_score}"
-            else:
-                text = f"{lang.total_manga_read}: {statistics.manga.count}\n"
-                text += (
-                    f"{lang.total_chapters_read}: {statistics.manga.chapters_read}\n"
                 )
-                text += f"{lang.total_volumes_read}: {statistics.manga.volumes_read}\n"
-                text += f"{lang.average_score}: {statistics.manga.mean_score}"
+
+                text = f"{lang.total_manga_read}: {manga.count}\n"
+                text += f"{lang.total_chapters_read}: {manga.chapters_read}\n"
+                text += f"{lang.total_volumes_read}: {manga.volumes_read}\n"
+                text += f"{lang.average_score}: {manga.mean_score}"
 
             await callback.answer(text, show_alert=True, cache_time=60)
