@@ -6,11 +6,21 @@ back_button: 🔙 Voltar
 
 # Words
 
+yes_text: "Sim"
+
+no_text: "Não"
+
+donator: Doador
+
+bio: Biografia
+
 language: Idioma
+
+username: Nome de usuário
 
 anime_stats: Estatísticas de Anime
 
-manga_stats: Estatísticas de Manga
+manga_stats: Estatísticas de Mangá
 
 total_anime_watched: Total de Animes Assistidos
 

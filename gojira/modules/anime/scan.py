@@ -85,13 +85,13 @@ async def anime_scan(bot: Gojira, message: Message):
         title_romaji = result["anilist"]["title"]["romaji"]
 
         text = f"<b>{title_romaji}</b>"
-        if bool(title_native):
+        if title_native:
             text += f" (<code>{title_native}</code>)"
         text += f"\n\n<b>ID</b>: <code>{anilist_id}</code>"
-        if episode is not None:
+        if episode:
             text += f"\n<b>{lang.episode}</b>: <code>{episode}</code>"
-        if is_adult is not None:
-            text += f"\n<b>{lang.is_adult}</b>: <code>{is_adult}</code>"
+        if is_adult:
+            text += f"\n<b>{lang.is_adult}</b>: <code>{lang.yes}</code>"
         text += (
             f"\n<b>{lang.similarity}</b>: <code>{round(similarity * 100, 2)}%</code>"
         )

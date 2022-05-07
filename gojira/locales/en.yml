@@ -6,7 +6,17 @@ back_button: 🔙 Back
 
 # Words
 
+yes_text: "Yes"
+
+no_text: "No"
+
+donator: Donator
+
+bio: Bio
+
 language: Language
+
+username: Username
 
 anime_stats: Anime Stats
 
