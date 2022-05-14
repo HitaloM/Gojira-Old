@@ -11,14 +11,14 @@ import httpx
 from anilist.types import Statistic, User
 from pyrogram import filters
 from pyrogram.helpers import ikb
-from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
+from pyrogram.types import CallbackQuery, Message
 
 from gojira.bot import Gojira
 from gojira.utils.langs.decorators import use_chat_language
 
 
 @Gojira.on_message(filters.cmd(r"user (.+)"))
-@Gojira.on_callback_query(filters.regex(r"^user (\d+)\s?(\d+)?\s?(\d+)?"))
+@Gojira.on_callback_query(filters.regex(r"^user (.+) (.+) (.+)"))
 @use_chat_language()
 async def user_view(bot: Gojira, union: Union[Message, CallbackQuery]):
     is_callback = isinstance(union, CallbackQuery)
@@ -146,25 +146,11 @@ async def user_view(bot: Gojira, union: Union[Message, CallbackQuery]):
 
         photo = f"https://img.anili.st/user/{auser.id}?a={time.time()}"
 
-        if bool(message.photo) and is_callback:
-            await union.edit_message_media(
-                InputMediaPhoto(
-                    photo,
-                    caption=text,
-                ),
-                reply_markup=ikb(keyboard),
-            )
-        elif bool(message.photo) and not bool(message.via_bot):
-            await message.edit_text(
-                text,
-                reply_markup=ikb(keyboard),
-            )
-        else:
-            await message.reply_photo(
-                photo,
-                caption=text,
-                reply_markup=ikb(keyboard),
-            )
+        await message.reply_photo(
+            photo,
+            caption=text,
+            reply_markup=ikb(keyboard),
+        )
 
 
 @Gojira.on_callback_query(filters.regex(r"^user stats (.+) (.+)"))
