@@ -8,7 +8,7 @@ license = "GPLv3"
 [tool.poetry.dependencies]
 python = "^3.10"
 httpx = {version = "0.22.0", extras = ["http2"]}
-humanize = "4.0.0"
+humanize = "4.1.0"
 meval = "2.5"
 PyYAML = "6.0"
 psutil = "5.9.0"
