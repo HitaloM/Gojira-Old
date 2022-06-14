@@ -18,7 +18,7 @@ from gojira.utils.langs.decorators import use_chat_language
 
 
 @Gojira.on_message(filters.cmd(r"user (.+)"))
-@Gojira.on_callback_query(filters.regex(r"^user (.+) (.+) (.+)"))
+@Gojira.on_callback_query(filters.regex(r"^user (\w+)\s?(\d+)?\s?(\d+)?"))
 @use_chat_language()
 async def user_view(bot: Gojira, union: Union[Message, CallbackQuery]):
     is_callback = isinstance(union, CallbackQuery)
@@ -138,8 +138,8 @@ async def user_view(bot: Gojira, union: Union[Message, CallbackQuery]):
 
         keyboard = [
             [
-                (lang.anime_stats, f"user stats {auser.name} anime"),
-                (lang.manga_stats, f"user stats {auser.name} manga"),
+                (lang.anime_stats, f"user-stats {auser.name} anime"),
+                (lang.manga_stats, f"user-stats {auser.name} manga"),
             ],
             [("🐢 Anilist", auser.url, "url")],
         ]
@@ -153,7 +153,7 @@ async def user_view(bot: Gojira, union: Union[Message, CallbackQuery]):
         )
 
 
-@Gojira.on_callback_query(filters.regex(r"^user stats (.+) (.+)"))
+@Gojira.on_callback_query(filters.regex(r"^user-stats (.+) (.+)$"))
 @use_chat_language()
 async def user_stats_view(bot: Gojira, callback: CallbackQuery):
     lang = callback._lang
