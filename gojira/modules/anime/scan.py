@@ -91,7 +91,7 @@ async def anime_scan(bot: Gojira, message: Message):
         if episode:
             text += f"\n<b>{lang.episode}</b>: <code>{episode}</code>"
         if is_adult:
-            text += f"\n<b>{lang.is_adult}</b>: <code>{lang.yes}</code>"
+            text += f"\n<b>{lang.is_adult}</b>: <code>{lang.yes_text}</code>"
         text += (
             f"\n<b>{lang.similarity}</b>: <code>{round(similarity * 100, 2)}%</code>"
         )
