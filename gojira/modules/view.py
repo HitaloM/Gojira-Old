@@ -33,5 +33,5 @@ async def view(bot: Gojira, message: Message):
                     await character_view(bot, message)
                 elif content_type == "staff":
                     await staff_view(bot, message)
-                else:
+                elif content_type == "manga":
                     await manga_view(bot, message)
