@@ -90,10 +90,15 @@ async def anime_inline(bot: Gojira, inline_query: InlineQuery):
                 ],
             ]
 
+            if hasattr(anime, "format"):
+                anime_format = "| " + anime.format
+            else:
+                anime_format = None
+
             results.append(
                 InlineQueryResultPhoto(
                     photo_url=photo,
-                    title=f"{anime.title.romaji} | {anime.format}",
+                    title=f"{anime.title.romaji} {anime_format}",
                     description=description,
                     caption=text,
                     reply_markup=ikb(keyboard),
