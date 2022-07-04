@@ -21,7 +21,7 @@ python-anilist = {git = "https://github.com/AmanoTeam/python-anilist", branch = 
 pyrogram = {git = "https://github.com/AmanoTeam/Pyrogram"}
 
 [tool.poetry.dev-dependencies]
-black = "^22.1"
+black = "^22.6"
 isort = "^5.10.1"
 flake8 = "^4.0.1"
 
