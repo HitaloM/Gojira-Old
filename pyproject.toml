@@ -23,7 +23,7 @@ pyrogram = {git = "https://github.com/AmanoTeam/Pyrogram"}
 [tool.poetry.dev-dependencies]
 black = "^22.6"
 isort = "^5.10.1"
-flake8 = "^4.0.1"
+flake8 = "^5.0.2"
 
 [tool.poetry.extras]
 fast = ["uvloop"]
