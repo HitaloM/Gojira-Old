@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0
-# Copyright (c) 2022 Hitalo <https://github.com/HitaloSama>
+# Copyright (c) 2022 Hitalo M. <https://github.com/HitaloM>
 
 import asyncio
 from typing import Union

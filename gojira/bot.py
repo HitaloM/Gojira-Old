@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0
-# Copyright (c) 2022 Hitalo <https://github.com/HitaloSama>
+# Copyright (c) 2022 Hitalo M. <https://github.com/HitaloM>
 # Copyright (c) 2021 Andriel <https://github.com/AndrielFR>
 
 import datetime
@@ -81,7 +81,7 @@ class Gojira(Client):
                 await self.send_message(
                     chat_id=sudo,
                     text=(
-                        f"<b>Gojira</b> <a href='https://github.com/HitaloSama/Gojira/commit/{self.version}'>{self.version}</a> (<code>{self.version_code}</code>) started!"
+                        f"<b>Gojira</b> <a href='https://github.com/HitaloM/Gojira/commit/{self.version}'>{self.version}</a> (<code>{self.version_code}</code>) started!"
                         f"\n<b>Pyrogram</b> <code>v{__version__}</code> (Layer {layer})"
                     ),
                     disable_web_page_preview=True,

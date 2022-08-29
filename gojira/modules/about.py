@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0
-# Copyright (c) 2022 Hitalo <https://github.com/HitaloSama>
+# Copyright (c) 2022 Hitalo M. <https://github.com/HitaloM>
 # Copyright (c) 2021 Andriel <https://github.com/AndrielFR>
 
 from typing import Union
@@ -22,7 +22,7 @@ async def about(bot: Gojira, union: Union[CallbackQuery, Message]):
 
     keyboard = [
         [
-            (lang.github_button, "https://github.com/HitaloSama/Gojira", "url"),
+            (lang.github_button, "https://github.com/HitaloM/Gojira", "url"),
             (lang.channel_button, "https://t.me/HitaloProjects", "url"),
         ]
     ]
@@ -38,7 +38,7 @@ async def about(bot: Gojira, union: Union[CallbackQuery, Message]):
     await (message.edit_text if is_callback else message.reply_text)(
         lang.about_text.format(
             bot_name=bot.me.first_name,
-            version=f"<a href='https://github.com/HitaloSama/Gojira/commit/{bot.version}'>{bot.version}</a>",
+            version=f"<a href='https://github.com/HitaloM/Gojira/commit/{bot.version}'>{bot.version}</a>",
             version_code=bot.version_code,
         ),
         disable_web_page_preview=True,
