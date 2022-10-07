@@ -9,6 +9,7 @@ from typing import Union
 import anilist
 import httpx
 import humanize
+import numpy
 from pyrogram import filters
 from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
@@ -346,19 +347,21 @@ async def anime_view_staff(bot: Gojira, callback: CallbackQuery):
         for person in staffs:
             staff_text += f"\n• <code>{person.id}</code> - <a href='https://t.me/{bot.me.username}/?start=staff_{person.id}'>{person.name.full}</a> (<i>{person.role}</i>)"
 
-        amount = 1024
+        # Separate staff_text into pages of 8 items
+        staff_text = numpy.array(staff_text.split("\n"))
+        staff_text = numpy.split(staff_text, numpy.arange(8, len(staff_text), 8))
+
+        pages = len(staff_text)
         page = 1 if page <= 0 else page
-        offset = (page - 1) * amount
-        stop = offset + amount
-        pages = math.ceil(len(staff_text) / amount)
-        staff_text = staff_text[offset - (3 if page > 1 else 0) : stop]
 
         page_buttons = []
         if page > 1:
             page_buttons.append(("⬅️", f"anime staff {anime_id} {user_id} {page - 1}"))
-        if not page == pages:
-            staff_text = staff_text[: len(staff_text) - 3] + "..."
+        if not page + 1 == pages:
             page_buttons.append(("➡️", f"anime staff {anime_id} {user_id} {page + 1}"))
+
+        staff_text = staff_text[page].tolist()
+        staff_text = "\n".join(staff_text)
 
         keyboard = []
         if len(page_buttons) > 0:
