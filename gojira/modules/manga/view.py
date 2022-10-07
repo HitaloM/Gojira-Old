@@ -329,8 +329,7 @@ async def manga_view_staff(bot: Gojira, callback: CallbackQuery):
             )
             return
 
-        staff_text = lang.staff_text
-
+        staff_text = ""
         staffs = sorted(manga.staff, key=lambda staff: staff.id)
         for person in staffs:
             staff_text += f"\n• <code>{person.id}</code> - <a href='https://t.me/{bot.me.username}/?start=staff_{person.id}'>{person.name.full}</a> (<i>{person.role}</i>)"
@@ -357,7 +356,8 @@ async def manga_view_staff(bot: Gojira, callback: CallbackQuery):
 
         keyboard.append([(lang.back_button, f"manga more {manga_id} {user_id}")])
 
+        text = f"{lang.staff_text}\n{staff_text}"
         await message.edit_text(
-            staff_text,
+            text,
             reply_markup=ikb(keyboard),
         )
