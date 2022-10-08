@@ -183,7 +183,7 @@ async def anime_view_more(bot: Gojira, callback: CallbackQuery):
 
         buttons = [
             (lang.description_button, f"anime description {anime_id} {user_id} 1"),
-            (lang.characters_button, f"anime characters {anime_id} {user_id}"),
+            (lang.characters_button, f"anime characters {anime_id} {user_id} 1"),
             (lang.staff_button, f"anime staff {anime_id} {user_id} 1"),
             (lang.airing_button, f"anime airing {anime_id} {user_id}"),
         ]
@@ -264,7 +264,7 @@ async def anime_view_description(bot: Gojira, callback: CallbackQuery):
         )
 
 
-@Gojira.on_callback_query(filters.regex(r"^anime characters (\d+) (\d+)"))
+@Gojira.on_callback_query(filters.regex(r"^anime characters (\d+) (\d+) (\d+)"))
 @use_chat_language()
 async def anime_view_characters(bot: Gojira, callback: CallbackQuery):
     message = callback.message
@@ -273,6 +273,7 @@ async def anime_view_characters(bot: Gojira, callback: CallbackQuery):
 
     anime_id = int(callback.matches[0].group(1))
     user_id = int(callback.matches[0].group(2))
+    page = int(callback.matches[0].group(3))
 
     if user_id != user.id:
         await callback.answer(
@@ -299,12 +300,40 @@ async def anime_view_characters(bot: Gojira, callback: CallbackQuery):
             )
             return
 
-        text = lang.characters_text
-
+        characters_text = ""
         characters = sorted(anime.characters, key=lambda character: character.id)
         for character in characters:
-            text += f"\n• <code>{character.id}</code> - <a href='https://t.me/{bot.me.username}/?start=character_{character.id}'>{character.name.full}</a> (<i>{character.role}</i>)"
+            characters_text += f"\n• <code>{character.id}</code> - <a href='https://t.me/{bot.me.username}/?start=character_{character.id}'>{character.name.full}</a> (<i>{character.role}</i>)"
 
+        # Separate staff_text into pages of 8 items
+        characters_text = numpy.array(characters_text.split("\n"))
+        characters_text = numpy.split(
+            characters_text, numpy.arange(8, len(characters_text), 8)
+        )
+
+        pages = len(characters_text)
+        page = 1 if page <= 0 else page
+
+        page_buttons = []
+        if page > 1:
+            page_buttons.append(
+                ("⬅️", f"anime characters {anime_id} {user_id} {page - 1}")
+            )
+        if not page + 1 == pages:
+            page_buttons.append(
+                ("➡️", f"anime characters {anime_id} {user_id} {page + 1}")
+            )
+
+        characters_text = characters_text[page].tolist()
+        characters_text = "\n".join(characters_text)
+
+        keyboard = []
+        if len(page_buttons) > 0:
+            keyboard.append(page_buttons)
+
+        keyboard.append([(lang.back_button, f"anime more {anime_id} {user_id}")])
+
+        text = f"{lang.characters_text}\n{characters_text}"
         await message.edit_text(
             text,
             reply_markup=ikb(keyboard),
