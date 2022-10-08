@@ -31,11 +31,6 @@ async def manga_start(bot: Gojira, union: Union[CallbackQuery, Message]):
         ],
         [
             (lang.search_button, "!m ", "switch_inline_query_current_chat"),
-            (
-                f"{lang.search_button} (nHentai)",
-                "!nh ",
-                "switch_inline_query_current_chat",
-            ),
         ],
     ]
 
