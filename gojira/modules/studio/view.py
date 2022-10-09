@@ -152,7 +152,7 @@ async def studio_view(bot: Gojira, union: Union[CallbackQuery, Message]):
                     }
                 """,
                 variables=dict(
-                    id=query,
+                    id=int(query),
                 ),
             ),
         )

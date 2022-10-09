@@ -523,7 +523,7 @@ async def anime_view_studio(bot: Gojira, callback: CallbackQuery):
                     }
                 """,
                 variables=dict(
-                    search=str(anime_id),
+                    id=int(anime_id),
                 ),
             ),
             headers={
