@@ -114,7 +114,9 @@ chapter: Chapter
 
 similarity: Similarity
 
-is_adult: "Is Adult"
+is_adult: "Adult"
+
+is_animation_studio: "Animation Studio"
 
 page: Page
 
@@ -196,6 +198,11 @@ manga_text: |
     You are in the <b>manga</b> section, use the buttons below to do what you want, see some suggestions, see your favorite manga, search, etc...
 
 manga_button: 📖 Manga
+
+studio_text : |
+    You are in the <b>studio</b> section, use the buttons below to do what you want, see some suggestions, see your favorite studio, search, etc...
+
+studio_button: 🎬 Studio
 
 character_text: |
     You are in the <b>character</b> section, use the buttons below to do what you want, see popular characters, see your favorite character, search, etc...

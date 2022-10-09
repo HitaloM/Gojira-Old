@@ -71,10 +71,11 @@ async def help(bot: Gojira, union: Union[Message, CallbackQuery]):
                     [
                         (lang.anime_button, "anime"),
                         (lang.manga_button, "manga"),
+                        (lang.character_button, "character"),
                     ],
                     [
-                        (lang.character_button, "character"),
                         (lang.staff_button, "staff"),
+                        (lang.studio_button, "studio"),
                     ],
                     [
                         (lang.back_button, "start"),

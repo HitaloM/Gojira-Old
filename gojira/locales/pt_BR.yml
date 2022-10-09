@@ -122,7 +122,9 @@ episodes_watched: Episódios assistidos
 
 similarity: Similaridade
 
-is_adult: "É adulto"
+is_adult: "Adulto"
+
+is_animation_studio: "Estúdio de animação"
 
 page: Página
 
@@ -201,6 +203,11 @@ anime_button: 👸 Anime
 
 manga_text: |
     Você está na seção <b>mangá</b>, use os botões abaixo para fazer o que deseja, ver algumas sugestões, ver seus mangás favoritos, pesquisar, etc...
+
+studio_text: |
+    Você está na seção <b>estúdio</b>, use os botões abaixo para fazer o que deseja, ver algumas sugestões, ver seus estúdios favoritos, pesquisar, etc...
+
+studio_button: 🎬 Estúdio
 
 character_text: |
     Você está na seção <b>personagens</b>, use os botões abaixo para fazer o que deseja, ver os mais populares, ver seus personagens favoritos, pesquisar, etc...
