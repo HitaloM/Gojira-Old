@@ -14,6 +14,7 @@ from gojira.modules.anime.view import anime_view
 from gojira.modules.character.view import character_view
 from gojira.modules.manga.view import manga_view
 from gojira.modules.staff.view import staff_view
+from gojira.modules.studio.view import studio_view
 from gojira.utils.langs.decorators import use_chat_language
 
 
@@ -104,7 +105,7 @@ async def help(bot: Gojira, union: Union[Message, CallbackQuery]):
 
 
 @Gojira.on_message(
-    filters.cmd(r"start (?P<content_type>anime|character|staff|manga)_(\d+)")
+    filters.cmd(r"start (?P<content_type>anime|character|staff|studio|manga)_(\d+)")
     & filters.private
 )
 async def view(bot: Gojira, message: Message):
@@ -119,5 +120,7 @@ async def view(bot: Gojira, message: Message):
         await character_view(bot, message)
     elif content_type == "staff":
         await staff_view(bot, message)
+    elif content_type == "studio":
+        await studio_view(bot, message)
     else:
         await manga_view(bot, message)

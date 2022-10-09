@@ -9,13 +9,14 @@ from typing import Union
 import anilist
 import httpx
 import humanize
-import numpy
+import numpy as np
 from pyrogram import filters
 from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 
 from gojira.bot import Gojira
 from gojira.modules.favorites import get_favorite_button
+from gojira.modules.studio.utils import Studio
 from gojira.utils.langs.decorators import use_chat_language
 
 
@@ -182,9 +183,10 @@ async def anime_view_more(bot: Gojira, callback: CallbackQuery):
         anime = await client.get(anime_id, "anime")
 
         buttons = [
-            (lang.description_button, f"anime description {anime_id} {user_id} 1"),
-            (lang.characters_button, f"anime characters {anime_id} {user_id} 1"),
-            (lang.staff_button, f"anime staff {anime_id} {user_id} 1"),
+            (lang.description_button, f"anime description {anime_id} {user_id} 0"),
+            (lang.characters_button, f"anime characters {anime_id} {user_id} 0"),
+            (lang.staff_button, f"anime staff {anime_id} {user_id} 0"),
+            (lang.studio_button, f"anime studio {anime_id} {user_id} 0"),
             (lang.airing_button, f"anime airing {anime_id} {user_id}"),
         ]
 
@@ -306,16 +308,16 @@ async def anime_view_characters(bot: Gojira, callback: CallbackQuery):
             characters_text += f"\n• <code>{character.id}</code> - <a href='https://t.me/{bot.me.username}/?start=character_{character.id}'>{character.name.full}</a> (<i>{character.role}</i>)"
 
         # Separate staff_text into pages of 8 items
-        characters_text = numpy.array(characters_text.split("\n"))
-        characters_text = numpy.split(
-            characters_text, numpy.arange(8, len(characters_text), 8)
+        characters_text = np.array(characters_text.split("\n"))
+        characters_text = np.delete(characters_text, np.argwhere(characters_text == ""))
+        characters_text = np.split(
+            characters_text, np.arange(8, len(characters_text), 8)
         )
 
         pages = len(characters_text)
-        page = 1 if page <= 0 else page
 
         page_buttons = []
-        if page > 1:
+        if page > 0:
             page_buttons.append(
                 ("⬅️", f"anime characters {anime_id} {user_id} {page - 1}")
             )
@@ -376,14 +378,14 @@ async def anime_view_staff(bot: Gojira, callback: CallbackQuery):
             staff_text += f"\n• <code>{person.id}</code> - <a href='https://t.me/{bot.me.username}/?start=staff_{person.id}'>{person.name.full}</a> (<i>{person.role}</i>)"
 
         # Separate staff_text into pages of 8 items
-        staff_text = numpy.array(staff_text.split("\n"))
-        staff_text = numpy.split(staff_text, numpy.arange(8, len(staff_text), 8))
+        staff_text = np.array(staff_text.split("\n"))
+        staff_text = np.delete(staff_text, np.argwhere(staff_text == ""))
+        staff_text = np.split(staff_text, np.arange(8, len(staff_text), 8))
 
         pages = len(staff_text)
-        page = 1 if page <= 0 else page
 
         page_buttons = []
-        if page > 1:
+        if page > 0:
             page_buttons.append(("⬅️", f"anime staff {anime_id} {user_id} {page - 1}"))
         if not page + 1 == pages:
             page_buttons.append(("➡️", f"anime staff {anime_id} {user_id} {page + 1}"))
@@ -477,6 +479,101 @@ async def anime_view_airing(bot: Gojira, callback: CallbackQuery):
 
     keyboard.append([(lang.back_button, f"anime more {anime_id} {user_id}")])
 
+    await message.edit_text(
+        text,
+        reply_markup=ikb(keyboard),
+    )
+
+
+@Gojira.on_callback_query(filters.regex(r"^anime studio (\d+) (\d+) (\d+)"))
+@use_chat_language()
+async def anime_view_studio(bot: Gojira, callback: CallbackQuery):
+    message = callback.message
+    user = callback.from_user
+    lang = callback._lang
+
+    anime_id = int(callback.matches[0].group(1))
+    user_id = int(callback.matches[0].group(2))
+    page = int(callback.matches[0].group(3))
+
+    if user_id != user.id:
+        await callback.answer(
+            lang.button_not_for_you,
+            show_alert=True,
+            cache_time=60,
+        )
+        return
+
+    async with httpx.AsyncClient(http2=True) as client:
+        response = await client.post(
+            url="https://graphql.anilist.co",
+            json=dict(
+                query="""
+                query($id: Int) {
+                    Page(page: 1, perPage: 1) {
+                        media(id: $id, type: ANIME) {
+                            studios {
+                                nodes {
+                                    id
+                                    name
+                                    }
+                                }
+                            }
+                        }
+                    }
+                """,
+                variables=dict(
+                    search=str(anime_id),
+                ),
+            ),
+            headers={
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+        )
+        data = response.json()
+
+        items = data["data"]["Page"]["media"][0]["studios"]["nodes"]
+
+        results = [
+            Studio(
+                id=item["id"],
+                name=item["name"],
+                url=None,
+                favorites=None,
+                is_animation_studio=None,
+            )
+            for item in items
+        ]
+
+    studio_text = ""
+    studios = sorted(results, key=lambda studio: studio.id)
+    for studio in studios:
+        studio_text += f"\n• <code>{studio.id}</code> - <a href='https://t.me/{bot.me.username}/?start=studio_{studio.id}'>{studio.name}</a>"
+
+    # Separate staff_text into pages of 8 items if more than 8 items
+    studio_text = np.array(studio_text.split("\n"))
+    studio_text = np.delete(studio_text, np.argwhere(studio_text == ""))
+    studio_text = np.split(studio_text, np.arange(8, len(studio_text), 8))
+
+    pages = len(studio_text)
+
+    page_buttons = []
+    if page > 0:
+        page_buttons.append(("⬅️", f"anime studio {anime_id} {user_id} {page - 1}"))
+    if not page + 1 == pages:
+        page_buttons.append(("➡️", f"anime studio {anime_id} {user_id} {page + 1}"))
+
+    studio_text = studio_text[page].tolist()
+    studio_text = "\n".join(studio_text)
+
+    keyboard = []
+    if len(page_buttons) > 0:
+        keyboard.append(page_buttons)
+
+    keyboard.append([(lang.back_button, f"anime more {anime_id} {user_id}")])
+
+    text = f"{lang.studios_text}\n{studio_text}"
     await message.edit_text(
         text,
         reply_markup=ikb(keyboard),

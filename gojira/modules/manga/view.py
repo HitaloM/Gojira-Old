@@ -7,7 +7,8 @@ import math
 from typing import Union
 
 import anilist
-import numpy
+import httpx
+import numpy as np
 from pyrogram import filters
 from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
@@ -176,9 +177,9 @@ async def manga_view_more(bot: Gojira, callback: CallbackQuery):
         manga = await client.get(manga_id, "manga")
 
         buttons = [
-            (lang.description_button, f"manga description {manga_id} {user_id} 1"),
-            (lang.characters_button, f"manga characters {manga_id} {user_id} 1"),
-            (lang.staff_button, f"manga staff {manga_id} {user_id} 1"),
+            (lang.description_button, f"manga description {manga_id} {user_id} 0"),
+            (lang.characters_button, f"manga characters {manga_id} {user_id} 0"),
+            (lang.staff_button, f"manga staff {manga_id} {user_id} 0"),
             ("🐢 Anilist", manga.url, "url"),
         ]
 
@@ -295,13 +296,13 @@ async def manga_view_characters(bot: Gojira, callback: CallbackQuery):
             characters_text += f"\n• <code>{character.id}</code> - <a href='https://t.me/{bot.me.username}/?start=character_{character.id}'>{character.name.full}</a> (<i>{character.role}</i>)"
 
         # Separate staff_text into pages of 8 items
-        characters_text = numpy.array(characters_text.split("\n"))
-        characters_text = numpy.split(
-            characters_text, numpy.arange(8, len(characters_text), 8)
+        characters_text = np.array(characters_text.split("\n"))
+        characters_text = np.delete(characters_text, np.argwhere(characters_text == ""))
+        characters_text = np.split(
+            characters_text, np.arange(8, len(characters_text), 8)
         )
 
         pages = len(characters_text)
-        page = 1 if page <= 0 else page
 
         page_buttons = []
         if page > 1:
@@ -365,11 +366,11 @@ async def manga_view_staff(bot: Gojira, callback: CallbackQuery):
             staff_text += f"\n• <code>{person.id}</code> - <a href='https://t.me/{bot.me.username}/?start=staff_{person.id}'>{person.name.full}</a> (<i>{person.role}</i>)"
 
         # Separate staff_text into pages of 8 items
-        staff_text = numpy.array(staff_text.split("\n"))
-        staff_text = numpy.split(staff_text, numpy.arange(8, len(staff_text), 8))
+        staff_text = np.array(staff_text.split("\n"))
+        staff_text = np.delete(staff_text, np.argwhere(staff_text == ""))
+        staff_text = np.split(staff_text, np.arange(8, len(staff_text), 8))
 
         pages = len(staff_text)
-        page = 1 if page <= 0 else page
 
         page_buttons = []
         if page > 1:
