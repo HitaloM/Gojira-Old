@@ -4,6 +4,7 @@
 from typing import Union
 
 import httpx
+import numpy as np
 from pyrogram import filters
 from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery, Message
@@ -137,17 +138,6 @@ async def studio_view(bot: Gojira, union: Union[CallbackQuery, Message]):
                         siteUrl
                         favourites
                         isAnimationStudio
-                        media(sort: POPULARITY_DESC) {
-                            nodes {
-                                id
-                                title {
-                                    romaji
-                                    english
-                                    native
-                                    }
-                                type
-                                }
-                            }
                         }
                     }
                 """,
@@ -181,13 +171,105 @@ async def studio_view(bot: Gojira, union: Union[CallbackQuery, Message]):
         is_anim = lang.yes_text if studio.is_animation_studio else lang.no_text
         text += f"\n<b>{lang.is_animation_studio}</b>: <code>{is_anim}</code>"
 
-        buttons = [("🐢 Anilist", studio.url, "url")]
+        buttons = [
+            (lang.media_button, f"studio media {studio.id} {user.id} 0"),
+            ("🐢 Anilist", studio.url, "url"),
+        ]
 
         if is_private:
             buttons.append(await get_favorite_button(lang, user, "studio", studio.id))
 
         keyboard = array_chunk(buttons, 2)
 
-        await message.reply_text(text, reply_markup=ikb(keyboard))
+        if not is_callback:
+            await message.reply_text(text, reply_markup=ikb(keyboard))
+        else:
+            await union.edit_message_text(text, reply_markup=ikb(keyboard))
 
     await client.aclose()
+
+
+@Gojira.on_callback_query(filters.regex(r"^studio media (\d+) (\d+) (\d+)"))
+@use_chat_language()
+async def studio_view_medias(bot: Gojira, callback: CallbackQuery):
+    message = callback.message
+    user = callback.from_user
+    lang = callback._lang
+
+    studio_id = int(callback.matches[0].group(1))
+    user_id = int(callback.matches[0].group(2))
+    page = int(callback.matches[0].group(3))
+
+    if user_id != user.id:
+        await callback.answer(
+            lang.button_not_for_you,
+            show_alert=True,
+            cache_time=60,
+        )
+        return
+
+    async with httpx.AsyncClient(http2=True) as client:
+        response = await client.post(
+            url="https://graphql.anilist.co",
+            json=dict(
+                query="""
+                query($id: Int) {
+                    Studio(id: $id) {
+                        media(sort: POPULARITY_DESC) {
+                            nodes {
+                                id
+                                title {
+                                    romaji
+                                    english
+                                    native
+                                    }
+                                type
+                                }
+                            }
+                        }
+                    }
+                """,
+                variables=dict(
+                    id=int(studio_id),
+                ),
+            ),
+        )
+        data = response.json()
+
+        medias = data["data"]["Studio"]["media"]["nodes"]
+
+    media_list = ""
+    for media in medias:
+        media_title = media["title"]["romaji"]
+        media_id = media["id"]
+        media_list += f"\n• <code>{media_id}</code> - <a href='https://t.me/{bot.me.username}/?start=anime_{media_id}'>{media_title}</a>"
+
+    # Separate staff_text into pages of 8 items if more than 8 items
+    media_list = np.array(media_list.split("\n"))
+    media_list = np.delete(media_list, np.argwhere(media_list == ""))
+    media_list = np.split(media_list, np.arange(8, len(media_list), 8))
+
+    pages = len(media_list)
+
+    page_buttons = []
+    if page > 0:
+        page_buttons.append(("⬅️", f"studio media {studio_id} {user_id} {page - 1}"))
+    if not page + 1 == pages:
+        page_buttons.append(("➡️", f"studio media {studio_id} {user_id} {page + 1}"))
+
+    media_list = media_list[page].tolist()
+    media_list = "\n".join(media_list)
+
+    keyboard = []
+    if len(page_buttons) > 0:
+        keyboard.append(page_buttons)
+
+    keyboard.append([(lang.back_button, f"studio {studio_id} {user_id} 0")])
+
+    text = f"{lang.studios_media_text}\n{media_list}"
+
+    await message.edit_text(
+        text,
+        disable_web_page_preview=True,
+        reply_markup=ikb(keyboard),
+    )

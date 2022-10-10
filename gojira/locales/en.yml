@@ -189,6 +189,11 @@ language_button: 🌐 Language
 
 search_button: 🔎 Search
 
+studios_media_text: |
+    Media that this studio has worked on.
+
+media_button: 🎬 Medias
+
 anime_text: |
     You are in the <b>anime</b> section, use the buttons below to do what you want, see some suggestions, see your favorite anime, search, etc...
 
