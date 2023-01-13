@@ -7,7 +7,6 @@ import math
 from typing import Union
 
 import anilist
-import httpx
 import numpy as np
 from pyrogram import filters
 from pyrogram.helpers import array_chunk, ikb
@@ -59,7 +58,7 @@ async def manga_view(bot: Gojira, union: Union[CallbackQuery, Message]):
                 results = await client.search(query, "manga", page=1, limit=10)
 
             if results is None or len(results) == 0:
-                await message.reply_text(lang.no_results)
+                await message.reply_text(lang.no_results_text)
                 return
 
             if len(results) == 1:
